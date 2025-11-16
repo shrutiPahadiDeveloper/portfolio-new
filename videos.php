@@ -319,7 +319,7 @@ if (!$serve_json) {
           </div>
         </div>
       </main>
-      <footer class="container" style="padding:30px 0;color:var(--muted);border-top:1px solid rgba(255,255,255,.08)">
+      <footer class="container" style="padding:180px 0;color:var(--muted);border-top:1px solid rgba(255,255,255,.08)">
         <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
           <div class="brand"><span class="logo" aria-hidden="true"></span><span>Shruti Sharma</span></div>
           <p>© <?php echo date('Y'); ?> Shruti Sharma. All rights reserved.</p>

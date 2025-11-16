@@ -4,6 +4,162 @@ logger_log('portfolio', 'INFO', 'Portfolio view', [
   'ip' => $_SERVER['REMOTE_ADDR'] ?? null,
   'ua' => $_SERVER['HTTP_USER_AGENT'] ?? null
 ]);
+$layout = isset($_GET['layout']) ? strtolower($_GET['layout']) : 'modern';
+$qpid = $_GET['qpid'] ?? ($_GET['qvid'] ?? null);
+$siteName = 'Shruti Sharma';
+$ogImage = 'shruti.jpg';
+$items = [
+  [
+    'id' => 'vlogs',
+    'title' => 'Himachali Travel Vlogs',
+    'image' => 'vlog_thumbnail.jpg',
+    'description' => "Villages, temples, fairs, trails, and local traditions.",
+    'long' => "I've created vlogs showcasing Himachal's villages, temples, fairs, nature trails, and local traditions. These stories reflect my connection to my roots and the soulful beauty of the mountains.",
+    'created' => '2023 - Present',
+    'platform' => 'YouTube, Instagram',
+    'link_label' => 'Watch on YouTube',
+    'link_url' => 'https://www.youtube.com/@shrutisharma__00'
+  ],
+  [
+    'id' => 'reels',
+    'title' => 'Cultural & Lifestyle Reels',
+    'image' => 'cultural_reel.jpg',
+    'description' => 'Festivals, pahadi cuisine, routines, spiritual thoughts.',
+    'long' => 'I share short videos on festivals, pahadi cuisine, family routines, and spiritual thoughts — with the hope that our culture reaches more people in an authentic way.',
+    'created' => '2022 - Present',
+    'platform' => 'Instagram Reels',
+    'link_label' => 'See on Instagram',
+    'link_url' => 'https://www.instagram.com/shrutipahari_007'
+  ],
+  [
+    'id' => 'photo',
+    'title' => 'Nature Photography',
+    'image' => 'nature_shots.jpg',
+    'description' => 'Peaceful hills, trees, rivers, open skies.',
+    'long' => 'From peaceful hills to trees, rivers, and open skies — I capture the serene beauty of nature. These are the reflections of my soul and love for the natural world.',
+    'created' => '2023 - Present',
+    'platform' => 'Phone Camera, CapCut, Lightroom',
+    'link_label' => 'Instagram Gallery',
+    'link_url' => 'https://www.instagram.com/shrutipahari_007'
+  ],
+  [
+    'id' => 'poetry',
+    'title' => 'Poetry & Storytelling',
+    'image' => 'poetry_reading.jpg',
+    'description' => 'Poems and life stories for peace and connection.',
+    'long' => 'Through poems and short stories, I express my thoughts, emotions, and life experiences — hoping to bring a sense of peace and connection to those who listen.',
+    'created' => '2022 - Present',
+    'platform' => 'Instagram, YouTube Shorts',
+    'link_label' => 'Watch Reels',
+    'link_url' => 'https://www.instagram.com/shrutipahari_007'
+  ],
+  [
+    'id' => 'cooking',
+    'title' => 'Local Cooking Series',
+    'image' => 'cooking_series.jpg',
+    'description' => 'Authentic pahadi recipes with local vegetables.',
+    'long' => 'Sharing the authentic taste of Himachal, I feature recipes using locally grown vegetables and traditional pahadi cooking styles — straight from my home kitchen.',
+    'created' => '2023',
+    'platform' => 'YouTube, Instagram',
+    'link_label' => 'Watch Now',
+    'link_url' => 'https://www.youtube.com/@shrutisharma__00'
+  ],
+  [
+    'id' => 'spiritual',
+    'title' => 'Spiritual Walks & Reflections',
+    'image' => 'spiritual_walks.jpg',
+    'description' => 'Temple visits and Bhagavad Gita learnings.',
+    'long' => 'I share glimpses of temple visits, learnings from the Bhagavad Gita, and personal moments of reflection — these are essential to my spiritual journey and growth.',
+    'created' => '2024',
+    'platform' => 'Instagram, YouTube Shorts',
+    'link_label' => 'Explore More',
+    'link_url' => 'https://www.instagram.com/shrutipahari_007'
+  ],
+];
+if ($qpid) {
+  $items = array_values(array_filter($items, function($it) use ($qpid){return $it['id'] === $qpid;}));
+}
+if ($layout === 'legacy') {
+  ?>
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="logos/favicon.ico" type="image/x-icon">
+    <title>Portfolio - <?php echo htmlspecialchars($siteName); ?> Portfolio</title>
+    <link rel="stylesheet" href="font.css">
+    <link rel="stylesheet" href="style.css">
+    <meta property="og:title" content="Portfolio - <?php echo htmlspecialchars($siteName); ?> Portfolio">
+    <meta property="og:image" content="<?php echo htmlspecialchars($ogImage); ?>">
+    <meta property="og:description" content="Content Creator | Himachali Soul | Nature Lover">
+    <meta property="og:url" content="https://shrutipahadi.com/portfolio.php">
+  </head>
+  <body>
+    <div class="page-loader"><div></div><div></div><div></div></div>
+    <div class="overlay"></div>
+    <div class="main">
+      <header class="header">
+        <div class="container">
+          <div class="row flex-end">
+            <button type="button" class="nav-toggler"><span></span></button>
+            <nav class="nav">
+              <div class="nav-inner">
+                <ul>
+                  <li><a href="index.php" class="nav-item">Home</a></li>
+                  <li><a href="about.php" class="nav-item">About</a></li>
+                  <li><a href="portfolio.php" class="nav-item active">Portfolio</a></li>
+                  <li><a href="contact.php" class="nav-item">Contact</a></li>
+                </ul>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </header>
+      <section class="portfolio-section sec-padding active" id="portfolio">
+        <div class="container">
+          <div class="row"><div class="section-title"><h2>Recent Work</h2></div></div>
+          <div class="row">
+            <?php foreach ($items as $it) { ?>
+            <div class="portfolio-item">
+              <div class="portfolio-item-thumbnail"><img src="<?php echo htmlspecialchars($it['image']); ?>" alt="<?php echo htmlspecialchars($it['title']); ?>"></div>
+              <h3 class="portfolio-item-title"><?php echo htmlspecialchars($it['title']); ?></h3>
+              <button type="button" class="btn view-project-btn" data-title="<?php echo htmlspecialchars($it['title']); ?>" data-description="<?php echo htmlspecialchars($it['long']); ?>">View Project</button>
+              <div class="portfolio-item-details">
+                <div class="description"><p><?php echo htmlspecialchars($it['long']); ?></p></div>
+                <div class="general-info">
+                  <ul>
+                    <li>Created - <span><?php echo htmlspecialchars($it['created']); ?></span></li>
+                    <li>Platform - <span><?php echo htmlspecialchars($it['platform']); ?></span></li>
+                    <li><span><a href="<?php echo htmlspecialchars($it['link_url']); ?>" target="_blank"><?php echo htmlspecialchars($it['link_label']); ?></a></span></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <?php } ?>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div class="portfolio-popup">
+      <div class="pp-inner">
+        <div class="pp-content">
+          <div class="pp-header">
+            <button type="button" class="btn pp-close">close</button>
+            <div class="pp-thumbnail"><img src="resturentpage.png" alt="pp-thumbnail"></div>
+            <h3></h3>
+          </div>
+          <div class="pp-body"></div>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+  </html>
+  <?php
+  exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +170,7 @@ logger_log('portfolio', 'INFO', 'Portfolio view', [
     <link rel="icon" href="logos/favicon.ico" type="image/x-icon" />
     <title>Portfolio - Shruti Sharma Portfolio</title>
     <meta property="og:title" content="Portfolio - Shruti Sharma Portfolio" />
-    <meta property="og:image" content="shruti.jpg" />
+    <meta property="og:image" content="<?php echo htmlspecialchars($ogImage); ?>" />
     <meta property="og:description" content="Content Creator | Himachali Soul | Nature Lover" />
     <meta property="og:url" content="https://shrutipahadi.com/portfolio.php" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -46,7 +202,7 @@ logger_log('portfolio', 'INFO', 'Portfolio view', [
       .card img{width:100%;height:180px;object-fit:cover}
       .info{padding:14px}.muted{color:var(--muted)}
       .btn{display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 14px;border-radius:12px;background:var(--primary);color:#fff;font-weight:800;border:0;cursor:pointer}
-      footer{padding:40px 0;color:var(--muted);border-top:1px solid rgba(255,255,255,.08);margin-top:40px}
+      footer{padding:180px 0;color:var(--muted);border-top:1px solid rgba(255,255,255,.08);margin-top:40px}
       .mobile-menu{position:fixed;inset:68px 0 0 0;background:rgba(10,12,16,.94);backdrop-filter:blur(12px);display:none;flex-direction:column;padding:20px;gap:12px;border-top:1px solid rgba(255,255,255,.06);z-index:60}
       .mobile-menu.open{display:flex}
       .mobile-menu a{padding:12px 10px;border-radius:10px;color:var(--text);font-weight:700}
@@ -86,54 +242,16 @@ logger_log('portfolio', 'INFO', 'Portfolio view', [
       <section class="container" id="portfolio">
         <h1>Recent Work</h1>
         <div class="grid">
+          <?php foreach ($items as $it) { ?>
           <div class="card">
-            <img src="vlog_thumbnail.jpg" alt="Himachali Travel Vlogs">
+            <img src="<?php echo htmlspecialchars($it['image']); ?>" alt="<?php echo htmlspecialchars($it['title']); ?>">
             <div class="info">
-              <h3>Himachali Travel Vlogs</h3>
-              <p class="muted">Villages, temples, fairs, trails, and local traditions.</p>
-              <a class="btn" href="https://www.youtube.com/@shrutisharma__00" target="_blank">Watch on YouTube</a>
+              <h3><?php echo htmlspecialchars($it['title']); ?></h3>
+              <p class="muted"><?php echo htmlspecialchars($it['description']); ?></p>
+              <a class="btn" href="<?php echo htmlspecialchars($it['link_url']); ?>" target="_blank"><?php echo htmlspecialchars($it['link_label']); ?></a>
             </div>
           </div>
-          <div class="card">
-            <img src="cultural_reel.jpg" alt="Cultural & Lifestyle Reels">
-            <div class="info">
-              <h3>Cultural & Lifestyle Reels</h3>
-              <p class="muted">Festivals, pahadi cuisine, routines, spiritual thoughts.</p>
-              <a class="btn" href="https://www.instagram.com/shrutipahari_007" target="_blank">See on Instagram</a>
-            </div>
-          </div>
-          <div class="card">
-            <img src="nature_shots.jpg" alt="Nature Photography">
-            <div class="info">
-              <h3>Nature Photography</h3>
-              <p class="muted">Peaceful hills, trees, rivers, open skies.</p>
-              <a class="btn" href="https://www.instagram.com/shrutipahari_007" target="_blank">Instagram Gallery</a>
-            </div>
-          </div>
-          <div class="card">
-            <img src="poetry_reading.jpg" alt="Poetry & Storytelling">
-            <div class="info">
-              <h3>Poetry & Storytelling</h3>
-              <p class="muted">Poems and life stories for peace and connection.</p>
-              <a class="btn" href="https://www.instagram.com/shrutipahari_007" target="_blank">Watch Reels</a>
-            </div>
-          </div>
-          <div class="card">
-            <img src="cooking_series.jpg" alt="Local Cooking Series">
-            <div class="info">
-              <h3>Local Cooking Series</h3>
-              <p class="muted">Authentic pahadi recipes with local vegetables.</p>
-              <a class="btn" href="https://www.youtube.com/@shrutisharma__00" target="_blank">Watch Now</a>
-            </div>
-          </div>
-          <div class="card">
-            <img src="spiritual_walks.jpg" alt="Spiritual Walks & Reflections">
-            <div class="info">
-              <h3>Spiritual Walks & Reflections</h3>
-              <p class="muted">Temple visits and Bhagavad Gita learnings.</p>
-              <a class="btn" href="https://www.instagram.com/shrutipahari_007" target="_blank">Explore More</a>
-            </div>
-          </div>
+          <?php } ?>
         </div>
       </section>
     </main>
