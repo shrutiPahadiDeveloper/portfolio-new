@@ -622,7 +622,7 @@ class VideosManager {
     }
 
     async loadCachedVideos() {
-        const response = await fetch('videos.php', { 
+        const response = await fetch('loadvideos.php', { 
             cache: 'no-cache',
             headers: {
                 'Accept': 'application/json'

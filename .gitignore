@@ -1,0 +1,16 @@
+logs/
+*.log
+*.tmp
+.env
+.env.local
+.env.*
+node_modules/
+vendor/
+dist/
+build/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
