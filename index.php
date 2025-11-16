@@ -4,6 +4,79 @@ logger_log('homepage', 'INFO', 'Homepage view', [
   'ip' => $_SERVER['REMOTE_ADDR'] ?? null,
   'ua' => $_SERVER['HTTP_USER_AGENT'] ?? null
 ]);
+$layout = isset($_GET['layout']) ? strtolower($_GET['layout']) : 'modern';
+$siteName = 'Shruti Sharma';
+$personName = 'Shruti Sharma';
+$heroTagline = 'Content Creator | Pahadi Girl | Nature & Culture Lover';
+$quote = '“Perform your duty with devotion and detachment — Bhagavad Gita”';
+$portraitMain = 'shruti.jpeg';
+$portraitMobile = 'shruti.jpg';
+$ogImage = 'shruti.jpg';
+if ($layout === 'legacy') {
+  ?>
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="logos/favicon.ico" type="image/x-icon">
+    <title><?php echo htmlspecialchars($siteName); ?> Portfolio</title>
+    <link rel="stylesheet" href="font.css">
+    <link rel="stylesheet" href="style.css">
+    <meta property="og:title" content="<?php echo htmlspecialchars($siteName); ?> Portfolio">
+    <meta property="og:image" content="<?php echo htmlspecialchars($ogImage); ?>">
+    <meta property="og:description" content="Content Creator | Himachali Soul | Nature Lover">
+    <meta property="og:url" content="https://shrutipahadi.com">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  </head>
+  <body>
+    <div class="page-loader"><div></div><div></div><div></div></div>
+    <div class="overlay"></div>
+    <div class="main">
+      <header class="header">
+        <div class="container">
+          <div class="row flex-end">
+            <button type="button" class="nav-toggler"><span></span></button>
+            <nav class="nav">
+              <div class="nav-inner">
+                <ul>
+                  <li><a href="index.php" class="nav-item active">Home</a></li>
+                  <li><a href="about.php" class="nav-item">About</a></li>
+                  <li><a href="portfolio.php" class="nav-item">Portfolio</a></li>
+                  <li><a href="contact.php" class="nav-item">Contact</a></li>
+                </ul>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </header>
+      <section class="home-section align-items-center active" id="home">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="home-text">
+              <p>Namaste 🙏 I'm</p>
+              <h1><?php echo htmlspecialchars($personName); ?></h1>
+              <h2><?php echo htmlspecialchars($heroTagline); ?></h2>
+              <p style="font-style: italic; margin-top: 8px; margin-bottom: 18px;"><?php echo htmlspecialchars($quote); ?></p>
+              <a href="about.php" class="btn">More About Me</a>
+              <a href="portfolio.php" class="btn">Watch My Work</a>
+            </div>
+            <div class="home-img">
+              <div class="img-box">
+                <img src="<?php echo htmlspecialchars($portraitMobile); ?>" alt="<?php echo htmlspecialchars($personName); ?> smiling outdoors">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <script src="script.js"></script>
+  </body>
+  </html>
+  <?php
+  exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +88,7 @@ logger_log('homepage', 'INFO', 'Homepage view', [
     <title>Shruti Sharma Portfolio</title>
     <meta name="description" content="Content Creator | Pahadi Girl | Nature & Culture Lover" />
     <meta property="og:title" content="Shruti Sharma Portfolio" />
-    <meta property="og:image" content="shruti.jpg" />
+    <meta property="og:image" content="<?php echo htmlspecialchars($ogImage); ?>" />
     <meta property="og:description" content="Content Creator | Himachali Soul | Nature Lover" />
     <meta property="og:url" content="https://shrutipahadi.com" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -120,7 +193,7 @@ logger_log('homepage', 'INFO', 'Homepage view', [
       .glow { position: absolute; inset: -20%; background: radial-gradient(600px 250px at 80% 20%, rgba(255,255,255,0.25), transparent 60%); mix-blend-mode: overlay; pointer-events: none; }
       .orb { position: absolute; width: 70px; height: 70px; border-radius: 999px; background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8), rgba(255,255,255,0) 60%), linear-gradient(135deg, var(--primary), var(--accent)); filter: blur(0.2px); opacity: .85; animation: float 8s ease-in-out infinite; box-shadow: 0 12px 30px rgba(124,58,237,0.35); }
       .orb.o1 { top: -16px; right: -16px; animation-delay: .1s; }
-      .orb.o2 { bottom: -14px; left: -10px; width: 90px; height: 90px; animation-delay: .6s; }
+      .orb.o2 { bottom: -28px; left: -20px; width: 90px; height: 90px; animation-delay: .6s; }
       .orb.o3 { bottom: 16px; right: -20px; width: 56px; height: 56px; animation-delay: .3s; }
       @keyframes float { 0%, 100% { transform: translateY(0) translateX(0); } 50% { transform: translateY(-12px) translateX(6px); } }
 
@@ -129,7 +202,7 @@ logger_log('homepage', 'INFO', 'Homepage view', [
       .reveal.show { opacity: 1; transform: none; }
 
       /* Footer */
-      footer { padding: 40px 0; color: var(--muted); border-top: 1px solid rgba(255,255,255,0.08); margin-top: 180px; }
+      footer { padding: 180px 0; color: var(--muted); border-top: 1px solid rgba(255,255,255,0.08); margin-top: 180px; }
       .footer-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 
       /* Responsive */
@@ -250,12 +323,12 @@ logger_log('homepage', 'INFO', 'Homepage view', [
         </a>
         <nav class="nav-links" aria-label="Primary">
           <a href="index.php" class="active">Home</a>
-          <a href="about.html">About</a>
-          <a href="portfolio.html">Portfolio</a>
-          <a href="contact.html">Contact</a>
+          <a href="about.php">About</a>
+          <a href="portfolio.php">Portfolio</a>
+          <a href="contact.php">Contact</a>
         </nav>
         <div class="nav-cta">
-          <a class="btn secondary" href="portfolio.html">Watch Work</a>
+          <a class="btn secondary" href="portfolio.php">Watch Work</a>
           <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
             <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path></svg>
             <svg id="moon" style="display:none" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
@@ -267,9 +340,9 @@ logger_log('homepage', 'INFO', 'Homepage view', [
       </div>
       <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile">
         <a href="index.php" class="active">Home</a>
-        <a href="about.html">About</a>
-        <a href="portfolio.html">Portfolio</a>
-        <a href="contact.html">Contact</a>
+        <a href="about.php">About</a>
+        <a href="portfolio.php">Portfolio</a>
+        <a href="contact.php">Contact</a>
       </nav>
     </header>
 
@@ -280,12 +353,12 @@ logger_log('homepage', 'INFO', 'Homepage view', [
         <div class="hero-grid">
           <div>
             <span class="eyebrow reveal">Namaste 🙏 I'm</span>
-            <h1 class="reveal" style="transition-delay: .05s">Shruti Sharma</h1>
-            <p class="reveal" style="transition-delay: .1s">Content Creator | Pahadi Girl | Nature & Culture Lover</p>
-            <p class="tagline reveal" style="transition-delay: .15s">“Perform your duty with devotion and detachment — Bhagavad Gita”</p>
+            <h1 class="reveal" style="transition-delay: .05s"><?php echo htmlspecialchars($personName); ?></h1>
+            <p class="reveal" style="transition-delay: .1s"><?php echo htmlspecialchars($heroTagline); ?></p>
+            <p class="tagline reveal" style="transition-delay: .15s"><?php echo htmlspecialchars($quote); ?></p>
             <div class="cta-row reveal" style="transition-delay: .2s">
-              <a href="about.html" class="btn">More About Me</a>
-              <a href="portfolio.html" class="btn secondary">Watch My Work</a>
+              <a href="about.php" class="btn">More About Me</a>
+              <a href="portfolio.php" class="btn secondary">Watch My Work</a>
             </div>
             <div class="metrics reveal" style="transition-delay:.25s">
               <div class="metric"><strong>100+</strong><span>Videos created</span></div>
@@ -297,8 +370,8 @@ logger_log('homepage', 'INFO', 'Homepage view', [
             <div class="portrait-wrap">
               <div class="portrait">
                 <picture>
-                  <source media="(max-width: 980px)" srcset="shruti.jpg" />
-                  <img src="shruti.jpeg" alt="Shruti Sharma smiling outdoors" />
+                  <source media="(max-width: 980px)" srcset="<?php echo htmlspecialchars($portraitMobile); ?>" />
+                  <img src="<?php echo htmlspecialchars($portraitMain); ?>" alt="<?php echo htmlspecialchars($personName); ?> smiling outdoors" />
                 </picture>
                 <span class="glow"></span>
               </div>
@@ -320,8 +393,8 @@ logger_log('homepage', 'INFO', 'Homepage view', [
         </div>
         <p class="muted">© <?php echo date('Y'); ?> Shruti Sharma. All rights reserved.</p>
         <div style="display:flex; gap: 10px;">
-          <a class="btn secondary" href="portfolio.html" style="height:36px; padding: 0 12px;">Portfolio</a>
-          <a class="btn" href="contact.html" style="height:36px; padding: 0 12px;">Contact</a>
+          <a class="btn secondary" href="portfolio.php" style="height:36px; padding: 0 12px;">Portfolio</a>
+          <a class="btn" href="contact.php" style="height:36px; padding: 0 12px;">Contact</a>
         </div>
       </div>
     </footer>
