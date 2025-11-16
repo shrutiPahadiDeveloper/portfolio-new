@@ -145,7 +145,7 @@ if ($layout === 'legacy') {
       html.light header{background:rgba(255,255,255,.7);border-bottom:1px solid rgba(2,6,23,.08)}
       .nav{height:68px;display:flex;align-items:center;justify-content:space-between}
       .brand{display:inline-flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.2px}
-      .logo{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--primary),var(--accent));box-shadow:inset 0 0 0 1px rgba(255,255,255,.15),0 8px 18px rgba(124,58,237,.25)}
+      .logo{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--primary),var(--accent));box-shadow:inset 0 0 0 1px rgba(255,255,255,.15),0 8px 18px rgba(124,58,237,.25);  color: #fff; font-size: 20px; font-weight: 700; line-height: 38px; text-align: center; }
       .nav-links{display:flex;align-items:center;gap:22px}
       .nav-links a{color:var(--muted);font-weight:700}
       .nav-links a.active,.nav-links a:hover{color:var(--text)}
@@ -199,7 +199,7 @@ if ($layout === 'legacy') {
     <div class="page-loader" id="loader" aria-live="polite" aria-label="Loading"><div class="dots" aria-hidden="true"><span></span><span></span><span></span></div></div>
     <header>
       <div class="container nav">
-        <a href="index.php" class="brand" aria-label="Home"><span class="logo" aria-hidden="true"></span><span>Shruti Sharma</span></a>
+        <a href="index.php" class="brand" aria-label="Home"><span class="logo" aria-hidden="true">S</span><span>Shruti Sharma</span></a>
         <nav class="nav-links" aria-label="Primary">
           <a href="index.php">Home</a>
           <a href="about.php" class="active">About</a>
@@ -270,7 +270,7 @@ if ($layout === 'legacy') {
     </main>
     <footer>
       <div class="container footer-row">
-        <div class="brand"><span class="logo" aria-hidden="true"></span><span>Shruti Sharma</span></div>
+        <div class="brand"><span class="logo" aria-hidden="true">S</span><span>Shruti Sharma</span></div>
         <p class="muted">© <?php echo date('Y'); ?> Shruti Sharma. All rights reserved.</p>
         <div style="display:flex;gap:10px"><a class="btn secondary" href="portfolio.php" style="height:36px;padding:0 12px">Portfolio</a><a class="btn" href="contact.php" style="height:36px;padding:0 12px">Contact</a></div>
       </div>
