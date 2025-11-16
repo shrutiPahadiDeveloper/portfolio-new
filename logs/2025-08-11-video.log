@@ -1,0 +1,8 @@
+[2025-08-11 18:24:25] [INFO] [video] videos.php request start {"method":"GET","ip":"127.0.0.1","ua":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"}
+[2025-08-11 18:24:25] [INFO] [video] Computed fetch limit {"isInitial":false,"lastUpdatedEpoch":1754757620,"ageDays":1,"fetchLimit":3,"perDayMultiplier":3}
+[2025-08-11 18:24:25] [INFO] [video] Fetching latest video IDs {"limit":3}
+[2025-08-11 18:24:25] [INFO] [video] Collected latest video IDs {"count":3,"rawSearchItems":3}
+[2025-08-11 18:24:25] [INFO] [video] Fetching details for video IDs {"count":3}
+[2025-08-11 18:24:25] [INFO] [video] Fetched details and normalized records {"newRecords":3}
+[2025-08-11 18:24:25] [INFO] [video] Cache updated {"totalVideos":449}
+[2025-08-11 18:24:25] [INFO] [video] Serving cache {"totalVideos":449}

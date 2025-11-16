@@ -1,0 +1,877 @@
+/* ========================================
+   VIDEOS RESPONSIVE CSS
+   ======================================== */
+
+/* Extra Large Desktop (1400px and up) */
+@media (min-width: 1400px) {
+    .video-gallery {
+        grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+        gap: 30px;
+        max-width: 1400px;
+    }
+    
+    .shorts-gallery {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 25px;
+        max-width: 1400px;
+    }
+    
+    .tab-container {
+        max-width: 450px;
+    }
+    
+    .tab-button {
+        padding: 15px 25px;
+        font-size: 16px;
+    }
+}
+
+/* Large Desktop (1200px - 1399px) */
+@media (min-width: 1200px) and (max-width: 1399px) {
+    .video-gallery {
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 25px;
+    }
+    
+    .shorts-gallery {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+    }
+}
+
+/* Desktop (992px - 1199px) */
+@media (min-width: 992px) and (max-width: 1199px) {
+    .video-gallery {
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 20px;
+    }
+    
+    .shorts-gallery {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 18px;
+    }
+    
+    .tab-container {
+        max-width: 380px;
+    }
+    
+    .tab-button {
+        padding: 12px 20px;
+        font-size: 14px;
+    }
+}
+
+ /* Tablet Landscape (768px - 991px) */
+ @media (min-width: 768px) and (max-width: 991px) {
+     .videos-section {
+         padding: 60px 0;
+         margin: 0 10px;
+     }
+     
+     .videos-section .container {
+         padding: 0 15px !important;
+     }
+     
+     .video-gallery {
+         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+         gap: 18px;
+     }
+     
+     .shorts-gallery {
+         grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+         gap: 15px;
+     }
+     
+     .tab-container {
+         max-width: 350px;
+     }
+     
+     .tab-button {
+         padding: 10px 16px;
+         font-size: 13px;
+         gap: 6px;
+     }
+     
+     .tab-icon {
+         font-size: 16px;
+     }
+     
+     .video-thumbnail {
+         height: 180px;
+     }
+     
+     .video-info {
+         padding: 15px;
+     }
+     
+     .video-title {
+         font-size: 14px;
+     }
+     
+     .video-date {
+         font-size: 12px;
+     }
+ }
+
+ /* Tablet Portrait (576px - 767px) */
+ @media (min-width: 576px) and (max-width: 767px) {
+     .videos-section {
+         padding: 50px 0;
+         margin: 0 8px;
+     }
+     
+     .videos-section .container {
+         padding: 0 12px !important;
+     }
+     
+     .video-gallery {
+         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+         gap: 15px;
+     }
+     
+     .shorts-gallery {
+         grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+         gap: 12px;
+     }
+     
+     .tab-container {
+         max-width: 320px;
+     }
+     
+     .tab-button {
+         padding: 8px 14px;
+         font-size: 12px;
+         gap: 6px;
+     }
+     
+     .tab-icon {
+         font-size: 15px;
+     }
+     
+     .tab-count {
+         font-size: 11px;
+         padding: 1px 6px;
+     }
+     
+     .video-thumbnail {
+         height: 160px;
+     }
+     
+     .video-info {
+         padding: 12px;
+     }
+     
+     .video-title {
+         font-size: 13px;
+         margin-bottom: 8px;
+     }
+     
+     .video-date {
+         font-size: 11px;
+     }
+     
+     .play-button {
+         width: 60px;
+         height: 60px;
+     }
+     
+     .play-button::after {
+         border-left: 15px solid var(--white);
+         border-top: 10px solid transparent;
+         border-bottom: 10px solid transparent;
+         margin-left: 5px;
+     }
+     
+     .short-play-button {
+         width: 50px;
+         height: 50px;
+     }
+     
+     .short-play-button::after {
+         border-left: 12px solid var(--white);
+         border-top: 8px solid transparent;
+         border-bottom: 8px solid transparent;
+         margin-left: 4px;
+     }
+     
+     .short-info {
+         padding: 25px 15px 15px;
+     }
+     
+     .short-title {
+         font-size: 13px;
+     }
+     
+     .short-date {
+         font-size: 11px;
+     }
+ }
+
+ /* Mobile Large (480px - 575px) */
+ @media (min-width: 480px) and (max-width: 575px) {
+     .videos-section {
+         padding: 40px 0;
+         margin: 0 5px;
+     }
+     
+     .videos-section .container {
+         padding: 0 10px !important;
+     }
+     
+     .video-gallery {
+         grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+         gap: 12px;
+     }
+     
+     .shorts-gallery {
+         grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+         gap: 10px;
+     }
+     
+     .tab-container {
+         max-width: 280px;
+         padding: 4px;
+     }
+     
+     .tab-button {
+         padding: 6px 12px;
+         font-size: 11px;
+         gap: 4px;
+     }
+     
+     .tab-icon {
+         font-size: 14px;
+     }
+     
+     .tab-text {
+         display: none;
+         padding-top: 5px;
+         line-height: 0px;
+     }
+     
+     .tab-count {
+         font-size: 10px;
+         padding: 1px 5px;
+         margin-top: 5px;
+         min-width: 18px;
+     }
+     
+     .video-thumbnail {
+         height: 140px;
+     }
+     
+     .video-info {
+         padding: 10px;
+     }
+     
+     .video-title {
+         font-size: 12px;
+         margin-bottom: 6px;
+         -webkit-line-clamp: 2;
+     }
+     
+     .video-date {
+         font-size: 10px;
+     }
+     
+     .play-button {
+         width: 50px;
+         height: 50px;
+     }
+     
+     .play-button::after {
+         border-left: 12px solid var(--white);
+         border-top: 8px solid transparent;
+         border-bottom: 8px solid transparent;
+         margin-left: 4px;
+     }
+     
+     .video-duration {
+         font-size: 10px;
+         padding: 2px 5px;
+         bottom: 8px;
+         right: 8px;
+     }
+     
+     .short-info {
+         padding: 20px 12px 12px;
+     }
+     
+     .short-title {
+         font-size: 12px;
+         margin-bottom: 6px;
+     }
+     
+     .short-date {
+         font-size: 10px;
+     }
+     
+     .shorts-badge {
+         font-size: 9px;
+         padding: 4px 8px;
+         top: 8px;
+         left: 8px;
+     }
+     
+     .short-duration {
+         font-size: 9px;
+         padding: 1px 4px;
+         bottom: 6px;
+         right: 6px;
+     }
+ }
+
+/* Mobile Medium (375px - 479px) */
+@media (min-width: 375px) and (max-width: 479px) {
+    .videos-section {
+        padding: 35px 0;
+    }
+    
+    .video-gallery {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        max-width: 320px;
+        margin: 0 auto;
+    }
+    
+    .shorts-gallery {
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+        gap: 8px;
+    }
+    
+    .tab-container {
+        max-width: 260px;
+        padding: 3px;
+    }
+    
+    .tab-button {
+        padding: 5px 10px;
+        font-size: 10px;
+        gap: 3px;
+    }
+    
+    .tab-icon {
+        font-size: 13px;
+    }
+    
+    .tab-count {
+        font-size: 9px;
+        padding: 1px 4px;
+        margin-top: 5px;
+        min-width: 16px;
+    }
+    
+    .video-thumbnail {
+        height: 180px;
+    }
+    
+    .video-info {
+        padding: 12px;
+    }
+    
+    .video-title {
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+    
+    .video-date {
+        font-size: 11px;
+    }
+    
+    .play-button {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .play-button::after {
+        border-left: 15px solid var(--white);
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        margin-left: 5px;
+    }
+    
+    .short-info {
+        padding: 18px 10px 10px;
+    }
+    
+    .short-title {
+        font-size: 11px;
+        margin-bottom: 5px;
+    }
+    
+    .short-date {
+        font-size: 9px;
+    }
+}
+
+/* Mobile Small (320px - 374px) */
+@media (min-width: 320px) and (max-width: 374px) {
+    .videos-section {
+        padding: 30px 0;
+    }
+    
+    .video-gallery {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        max-width: 280px;
+        margin: 0 auto;
+    }
+    
+    .shorts-gallery {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 6px;
+    }
+    
+    .tab-container {
+        max-width: 240px;
+        padding: 2px;
+    }
+    
+    .tab-button {
+        padding: 4px 8px;
+        font-size: 9px;
+        gap: 2px;
+    }
+    
+    .tab-icon {
+        font-size: 12px;
+    }
+    
+    .tab-count {
+        font-size: 8px;
+        padding: 1px 3px;
+        margin-top: 5px;
+        min-width: 14px;
+    }
+    
+    .video-thumbnail {
+        height: 160px;
+    }
+    
+    .video-info {
+        padding: 10px;
+    }
+    
+    .video-title {
+        font-size: 13px;
+        margin-bottom: 6px;
+    }
+    
+    .video-date {
+        font-size: 10px;
+    }
+    
+    .play-button {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .play-button::after {
+        border-left: 12px solid var(--white);
+        border-top: 8px solid transparent;
+        border-bottom: 8px solid transparent;
+        margin-left: 4px;
+    }
+    
+    .short-info {
+        padding: 15px 8px 8px;
+    }
+    
+    .short-title {
+        font-size: 10px;
+        margin-bottom: 4px;
+    }
+    
+    .short-date {
+        font-size: 8px;
+    }
+    
+    .shorts-badge {
+        font-size: 8px;
+        padding: 3px 6px;
+        top: 6px;
+        left: 6px;
+    }
+}
+
+/* Extra Small Mobile (below 320px) */
+@media (max-width: 319px) {
+    .videos-section {
+        padding: 25px 0;
+    }
+    
+    .video-gallery {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        max-width: 260px;
+        margin: 0 auto;
+    }
+    
+    .shorts-gallery {
+        grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+        gap: 5px;
+    }
+    
+    .tab-container {
+        max-width: 220px;
+        padding: 2px;
+    }
+    
+    .tab-button {
+        padding: 3px 6px;
+        font-size: 8px;
+        gap: 2px;
+    }
+    
+    .tab-icon {
+        font-size: 11px;
+    }
+    
+    .tab-count {
+        font-size: 7px;
+        padding: 1px 2px;
+        margin-top: 5px;
+        min-width: 12px;
+    }
+    
+    .video-thumbnail {
+        height: 140px;
+    }
+    
+    .video-info {
+        padding: 8px;
+    }
+    
+    .video-title {
+        font-size: 12px;
+        margin-bottom: 5px;
+    }
+    
+    .video-date {
+        font-size: 9px;
+    }
+    
+    .play-button {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .play-button::after {
+        border-left: 10px solid var(--white);
+        border-top: 7px solid transparent;
+        border-bottom: 7px solid transparent;
+        margin-left: 3px;
+    }
+    
+    .short-info {
+        padding: 12px 6px 6px;
+    }
+    
+    .short-title {
+        font-size: 9px;
+        margin-bottom: 3px;
+    }
+    
+    .short-date {
+        font-size: 7px;
+    }
+    
+    .shorts-badge {
+        font-size: 7px;
+        padding: 2px 5px;
+        top: 5px;
+        left: 5px;
+    }
+}
+
+/* ========================================
+   FIXES FOR SHORTS BACKGROUND ISSUE
+   ======================================== */
+
+ /* Ensure shorts gallery has proper background coverage */
+ .shorts-gallery {
+     position: relative;
+     z-index: 1;
+     min-height: auto;
+     height: auto;
+     overflow: visible;
+ }
+
+ /* Add extra padding to videos section to prevent content overflow */
+ .videos-section {
+     overflow: visible;
+     position: relative;
+     min-height: 100vh;
+     padding-bottom: 100px;
+ }
+/* 
+ .videos-section::after {
+     content: '';
+     position: absolute;
+     bottom: -100px;
+     left: 0;
+     right: 0;
+     height: 100px;
+     background: inherit;
+     z-index: 0;
+ } */
+
+ /* Extend the row background to accommodate all content */
+ .videos-section .row {
+     min-height: auto;
+     height: auto;
+     overflow: visible;
+     position: relative;
+     z-index: 2;
+     padding-bottom: 50px;
+ }
+
+ /* Ensure the container can expand */
+ .videos-section .container {
+     min-height: auto;
+     height: auto;
+     overflow: visible;
+     padding-bottom: 30px;
+ }
+
+ /* Override any height constraints from main styles */
+ .videos-section {
+     min-height: auto !important;
+     height: auto !important;
+     overflow: visible !important;
+     display: block !important;
+ }
+
+ .videos-section .main {
+     min-height: auto !important;
+     height: auto !important;
+     overflow: visible !important;
+     max-width: 100% !important;
+ }
+
+ /* Override section constraints from main CSS */
+ .videos-section {
+     min-height: auto !important;
+     height: auto !important;
+     border-radius: 20px !important;
+ }
+
+ /* Override container constraints */
+ .videos-section .container {
+     padding: 0 20px !important;
+     width: 100% !important;
+     max-width: 100% !important;
+ }
+
+ /* Override row constraints */
+ .videos-section .row {
+     display: block !important;
+     flex-wrap: nowrap !important;
+     width: 100% !important;
+ }
+
+ /* Ensure tab content has proper background */
+ .tab-content {
+     position: relative;
+     z-index: 2;
+     background: inherit;
+     min-height: auto;
+     height: auto;
+     overflow: visible;
+ }
+
+ .tab-panel {
+     position: relative;
+     z-index: 1;
+     min-height: auto;
+     height: auto;
+     overflow: visible;
+ }
+
+ /* Fix for very tall content */
+ .videos-content {
+     position: relative;
+     z-index: 1;
+     min-height: auto;
+     height: auto;
+     overflow: visible;
+ }
+
+ /* Ensure galleries can expand properly */
+ .video-gallery,
+ .shorts-gallery {
+     min-height: auto;
+     height: auto;
+     overflow: visible;
+     position: relative;
+     z-index: 1;
+ }
+
+ /* ========================================
+    ENHANCED MOBILE EXPERIENCE
+    ======================================== */
+
+ /* Critical mobile fixes */
+ @media (max-width: 767px) {
+     /* Override body padding for mobile */
+     body {
+         padding: 15px 5px !important;
+     }
+     
+     /* Ensure videos section fits mobile */
+     .videos-section {
+         margin: 0 !important;
+         border-radius: 15px !important;
+         min-height: auto !important;
+     }
+     
+     /* Adjust main container for mobile */
+     .videos-section .main {
+         max-width: 100% !important;
+         margin: 0 !important;
+         padding: 0 !important;
+     }
+     
+     /* Mobile container adjustments */
+     .videos-section .container {
+         padding: 0 10px !important;
+         width: 100% !important;
+         max-width: 100% !important;
+     }
+     
+     /* Mobile row adjustments */
+     .videos-section .row {
+         margin: 0 !important;
+         padding: 0 !important;
+         width: 100% !important;
+     }
+     
+     /* Section title mobile adjustments */
+     .videos-section .section-title {
+         padding: 0 5px !important;
+         margin-bottom: 20px !important;
+     }
+     
+     .videos-section .section-title h2 {
+         font-size: 28px !important;
+     }
+     
+     .videos-section .section-title p {
+         font-size: 14px !important;
+     }
+ }
+
+ /* Touch-friendly interactions */
+ @media (hover: none) and (pointer: coarse) {
+     .video-item,
+     .short-item {
+         cursor: default;
+     }
+     
+     .video-item:active,
+     .short-item:active {
+         transform: scale(0.98);
+     }
+     
+     .tab-button:active {
+         transform: scale(0.95);
+     }
+     
+     .video-modal-close:active {
+         transform: scale(0.9);
+     }
+ }
+
+/* Better loading states for mobile */
+@media (max-width: 767px) {
+    .loading-container {
+        padding: 40px 20px;
+    }
+    
+    .loading-spinner {
+        width: 40px;
+        height: 40px;
+        margin-bottom: 15px;
+    }
+    
+    .error-container {
+        padding: 40px 20px;
+    }
+    
+    .error-icon {
+        font-size: 36px;
+        margin-bottom: 15px;
+    }
+}
+
+/* Improved modal for mobile */
+@media (max-width: 767px) {
+    .video-modal-content {
+        width: 95vw;
+        height: auto;
+        aspect-ratio: 16/9;
+        margin: 10px;
+        border-radius: 15px;
+    }
+    
+    .video-modal-close {
+        top: 8px;
+        right: 8px;
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+    }
+}
+
+/* Landscape orientation fixes */
+@media (orientation: landscape) and (max-height: 600px) {
+    .videos-section {
+        padding: 20px 0;
+    }
+    
+    .video-tabs {
+        margin-bottom: 20px;
+    }
+    
+    .tab-content {
+        min-height: 300px;
+    }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .video-thumbnail,
+    .short-thumbnail {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    .tab-indicator,
+    .tab-panel,
+    .video-item,
+    .short-item,
+    .play-button,
+    .short-play-button,
+    .tab-button,
+    .video-modal-close {
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .video-item,
+    .short-item {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    .tab-container {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+}

@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="logos/favicon.ico" type="image/x-icon">
+    <title>Videos - Shruti Sharma Portfolio</title>
+    <link rel="stylesheet" href="font.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="videos-responsive.css">
+    <meta property="og:title" content="Videos - Shruti Sharma Portfolio">
+    <meta property="og:image" content="shruti.jpg">
+    <meta property="og:description" content="Latest videos from Shruti Sharma - Content Creator | Himachali Soul">
+    <meta property="og:url" content="https://shrutipahadi.com/videos.html">
+</head>
+
+<body>
+    
+    <!-- page loader start -->
+    <div class="page-loader">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <!-- page loader end -->
+
+    <!-- overlay start -->
+    <div class="overlay">
+        
+    </div>
+    <!-- overlay end -->
+
+<!--main start-->
+<div class="main">
+
+    <!-- header start -->
+    <header class="header">
+        <div class="container">
+            <div class="row flex-end">
+                <button type="button" class="nav-toggler">
+                    <span></span>
+                </button>
+                <nav class="nav">
+                    <div class="nav-inner">
+                        <ul>
+                            <li><a href="index.html" class="nav-item">Home</a></li>
+                            <li><a href="about.html" class="nav-item">About</a></li>
+                            <li><a href="portfolio.html" class="nav-item">Portfolio</a></li>
+                            <li><a href="videos.html" class="nav-item active">Videos</a></li>
+                            <li><a href="contact.html" class="nav-item">Contact</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <!-- header end -->
+
+    <!--videos section start-->
+    <section class="videos-section align-items-center active" id="videos">
+        <div class="container">
+            <div class="row">
+                <div class="section-title">
+                    <h2>Latest Videos</h2>
+                    <p>Discover my latest content and YouTube Shorts</p>
+                </div>
+                
+                <!-- Loading State -->
+                <div id="loadingState" class="loading-container">
+                    <div class="loading-spinner"></div>
+                    <p>Loading videos...</p>
+                </div>
+
+                <!-- Error State -->
+                <div id="errorState" class="error-container hidden">
+                    <div class="error-icon">⚠️</div>
+                    <h3>Oops! Something went wrong</h3>
+                    <p>Failed to load videos. Please try refreshing the page.</p>
+                    <button class="btn" onclick="location.reload()">Try Again</button>
+                </div>
+
+                <!-- Videos Content -->
+                <div id="videosContent" class="videos-content hidden">
+                    <!-- Tab Navigation -->
+                    <div class="video-tabs">
+                        <div class="tab-container">
+                            <button class="tab-button active" data-tab="longs">
+                                <span class="tab-icon">📺</span>
+                                <span class="tab-text">Videos</span>
+                                <span class="tab-count" id="longsCount">0</span>
+                            </button>
+                            <button class="tab-button" data-tab="shorts">
+                                <span class="tab-icon">📱</span>
+                                <span class="tab-text">Shorts</span>
+                                <span class="tab-count" id="shortsCount">0</span>
+                            </button>
+                            <div class="tab-indicator"></div>
+                        </div>
+                    </div>
+
+                    <!-- Tab Content -->
+                    <div class="tab-content">
+                        <!-- Long Format Videos Tab -->
+                        <div class="tab-panel active" id="longsPanel">
+    <div class="video-gallery" id="longsGallery"></div>
+  </div>
+
+                        <!-- YouTube Shorts Tab -->
+                        <div class="tab-panel" id="shortsPanel">
+    <div class="shorts-gallery" id="shortsGallery"></div>
+  </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--videos section end-->
+
+</div>
+<!--main end-->
+
+<!-- Video Modal -->
+<div class="video-modal-overlay" id="videoModal" role="dialog" aria-modal="true">
+    <div class="video-modal-content">
+        <button class="video-modal-close" id="modalClose" aria-label="Close video">
+            <span>✕</span>
+        </button>
+        <div class="video-modal-iframe-container">
+            <iframe id="modalIframe" class="video-modal-iframe" src="" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen></iframe>
+        </div>
+    </div>
+  </div>
+
+<style>
+/* Videos Section Specific Styles */
+.videos-section {
+    padding: 80px 0;
+}
+
+.loading-container {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 3px solid var(--white-alpha-25);
+    border-top: 3px solid var(--main-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+.error-container {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.error-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.error-container h3 {
+    color: var(--main-color);
+    margin-bottom: 10px;
+}
+
+ /* Tab Navigation */
+ .video-tabs {
+     margin-bottom: 40px;
+ }
+
+ .tab-container {
+     position: relative;
+     display: flex;
+     background: var(--white-alpha-25);
+     border: 1px solid var(--white-alpha-40);
+     border-radius: 50px;
+     padding: 6px;
+     max-width: 400px;
+     margin: 0 auto;
+     backdrop-filter: var(--backdrop-filter-blur);
+ }
+
+ .tab-button {
+     position: relative;
+     flex: 1;
+     background: none;
+     border: none;
+     padding: 12px 20px;
+     border-radius: 40px;
+     cursor: pointer;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     gap: 8px;
+     font-family: 'Poppins', sans-serif;
+     font-size: 14px;
+     font-weight: 500;
+     color: var(--blue-dark);
+     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+     z-index: 2;
+ }
+
+ .tab-button:hover {
+     color: var(--main-color);
+     transform: translateY(-1px);
+ }
+
+ .tab-button.active {
+     color: var(--white);
+     transform: translateY(-2px);
+ }
+
+ .tab-icon {
+     font-size: 18px;
+     transition: transform 0.3s ease;
+ }
+
+ .tab-button:hover .tab-icon {
+     transform: scale(1.1);
+ }
+
+ .tab-button.active .tab-icon {
+     transform: scale(1.2);
+ }
+
+ .tab-text {
+     font-weight: 600;
+     padding-top: 5px;
+     line-height: 0px;
+ }
+
+ .tab-count {
+     background: rgba(255, 255, 255, 0.2);
+     color: inherit;
+     padding: 2px 8px;
+     border-radius: 12px;
+     margin-top: 5px;
+     font-size: 12px;
+     font-weight: 600;
+     min-width: 20px;
+     text-align: center;
+     transition: all 0.3s ease;
+ }
+
+ .tab-button.active .tab-count {
+     background: rgba(255, 255, 255, 0.3);
+ }
+
+ .tab-indicator {
+     position: absolute;
+     top: 6px;
+     left: 6px;
+     width: calc(50% - 6px);
+     height: calc(100% - 12px);
+     background: linear-gradient(135deg, var(--main-color), #ff6b9d);
+     border-radius: 40px;
+     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+     z-index: 1;
+     box-shadow: 0 4px 15px rgba(224, 47, 107, 0.3);
+ }
+
+ .tab-indicator.shorts {
+     transform: translateX(100%);
+ }
+
+ /* Tab Content */
+ .tab-content {
+     position: relative;
+     min-height: 400px;
+ }
+
+ .tab-panel {
+     display: none;
+     opacity: 0;
+     transform: translateY(20px);
+     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+ }
+
+ .tab-panel.active {
+     display: block;
+     opacity: 1;
+     transform: translateY(0);
+ }
+
+ .tab-panel.fade-out {
+     opacity: 0;
+     transform: translateY(-20px);
+ }
+
+/* Long Format Videos */
+.video-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 25px;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+.video-item {
+    background: var(--white-alpha-25);
+    border: 1px solid var(--white-alpha-40);
+    border-radius: 20px;
+    overflow: hidden;
+    backdrop-filter: var(--backdrop-filter-blur);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.video-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    border-color: var(--main-color);
+}
+
+.thumbnail-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.video-thumbnail {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.video-item:hover .video-thumbnail {
+    transform: scale(1.05);
+}
+
+.play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70px;
+    height: 70px;
+    background: rgba(255, 0, 0, 0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.9;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.play-button::after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 18px solid var(--white);
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    margin-left: 6px;
+}
+
+.video-item:hover .play-button {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+.video-duration {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(0,0,0,0.8);
+    color: var(--white);
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.video-info {
+    padding: 20px;
+}
+
+.video-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--blue-dark);
+    margin-bottom: 10px;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.video-date {
+    font-size: 14px;
+    color: var(--main-color);
+    font-weight: 500;
+}
+
+/* YouTube Shorts */
+.shorts-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.short-item {
+    background: var(--white-alpha-25);
+    border: 1px solid var(--white-alpha-40);
+    border-radius: 20px;
+    overflow: hidden;
+    backdrop-filter: var(--backdrop-filter-blur);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    aspect-ratio: 9/16;
+    position: relative;
+}
+
+.short-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    border-color: var(--main-color);
+}
+
+.short-thumbnail-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.short-thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.short-item:hover .short-thumbnail {
+    transform: scale(1.05);
+}
+
+.short-play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 0, 0, 0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.9;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.short-play-button::after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 15px solid var(--white);
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    margin-left: 5px;
+}
+
+.short-item:hover .short-play-button {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+.shorts-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: rgba(255, 0, 0, 0.9);
+    color: var(--white);
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.short-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    padding: 30px 20px 20px;
+}
+
+.short-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 8px;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.short-date {
+    font-size: 12px;
+    color: rgba(255,255,255,0.8);
+    font-weight: 500;
+}
+
+/* Video Modal */
+.video-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.9);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.video-modal-overlay.open {
+    display: flex;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.video-modal-content {
+    position: relative;
+    width: min(95vw, 1000px);
+    aspect-ratio: 16/9;
+    background: var(--white);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+.video-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(0,0,0,0.7);
+    color: var(--white);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    transition: all 0.3s ease;
+}
+
+.video-modal-close:hover {
+    background: rgba(0,0,0,0.9);
+    transform: scale(1.1);
+}
+
+.video-modal-iframe-container {
+    width: 100%;
+    height: 100%;
+    background: #000;
+}
+
+.video-modal-iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+ /* Base responsive adjustments - detailed responsive styles moved to videos-responsive.css */
+
+/* Utility Classes */
+.hidden {
+    display: none !important;
+}
+</style>
+
+<script src="script.js"></script>
+  <script>
+// Videos functionality
+class VideosManager {
+    constructor() {
+        this.loadingState = document.getElementById('loadingState');
+        this.errorState = document.getElementById('errorState');
+        this.videosContent = document.getElementById('videosContent');
+        this.longsGallery = document.getElementById('longsGallery');
+        this.shortsGallery = document.getElementById('shortsGallery');
+        this.modal = document.getElementById('videoModal');
+        this.modalIframe = document.getElementById('modalIframe');
+        
+        this.init();
+    }
+
+    async init() {
+        try {
+            this.showLoading();
+            const cache = await this.loadCachedVideos();
+            this.renderVideos(cache);
+            this.hideLoading();
+            this.showContent();
+        } catch (error) {
+            console.error('Failed to load videos:', error);
+            this.hideLoading();
+            this.showError();
+        }
+    }
+
+    async loadCachedVideos() {
+        const response = await fetch('videos.php', { 
+            cache: 'no-cache',
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+        
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
+        return await response.json();
+    }
+
+    formatDuration(seconds) {
+        if (!seconds) return '0:00';
+        
+        const hours = Math.floor(seconds / 3600);
+        const minutes = Math.floor((seconds % 3600) / 60);
+        const secs = Math.floor(seconds % 60);
+        
+        if (hours > 0) {
+            return `${hours}:${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        }
+        return `${minutes}:${String(secs).padStart(2, '0')}`;
+    }
+
+    formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        });
+    }
+
+    openModal(videoId, isShort = false) {
+        const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+        this.modalIframe.src = embedUrl;
+        this.modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        
+        // Focus management for accessibility
+        this.modal.setAttribute('aria-hidden', 'false');
+        document.querySelector('.video-modal-close').focus();
+    }
+
+    closeModal() {
+        this.modalIframe.src = '';
+        this.modal.classList.remove('open');
+        document.body.style.overflow = '';
+        this.modal.setAttribute('aria-hidden', 'true');
+    }
+
+    renderVideos(cache) {
+      const videos = Array.isArray(cache.videos) ? cache.videos : [];
+
+        // Separate videos by duration (≤ 160s = shorts)
+      const shorts = [];
+      const longs = [];
+        
+        videos.forEach(video => {
+            if ((video.durationSeconds || 0) <= 160) {
+                shorts.push(video);
+            } else {
+                longs.push(video);
+            }
+        });
+
+                 // Update tab counts
+         this.updateTabCounts(longs, shorts);
+         
+         // Render long format videos
+         this.renderLongVideos(longs);
+         
+         // Render shorts
+         this.renderShorts(shorts);
+         
+         // Show appropriate tab based on content
+         if (longs.length > 0) {
+             this.switchTab('longs');
+         } else if (shorts.length > 0) {
+             this.switchTab('shorts');
+         }
+    }
+
+    renderLongVideos(videos) {
+        this.longsGallery.innerHTML = '';
+        
+        videos.forEach(video => {
+            const videoElement = this.createLongVideoElement(video);
+            this.longsGallery.appendChild(videoElement);
+        });
+    }
+
+    renderShorts(videos) {
+        this.shortsGallery.innerHTML = '';
+        
+        videos.forEach(video => {
+            const shortElement = this.createShortElement(video);
+            this.shortsGallery.appendChild(shortElement);
+        });
+    }
+
+    createLongVideoElement(video) {
+        const element = document.createElement('div');
+        element.className = 'video-item';
+        element.setAttribute('data-video-id', video.id);
+        
+        element.innerHTML = `
+            <div class="thumbnail-container">
+                <img src="${video.thumbnailUrl}" 
+                     alt="${video.title}" 
+                     class="video-thumbnail" 
+                     loading="lazy" />
+                <div class="play-button" aria-label="Play video"></div>
+                <div class="video-duration">${this.formatDuration(video.durationSeconds)}</div>
+          </div>
+          <div class="video-info">
+                <div class="video-title">${video.title}</div>
+                <div class="video-date">Published: ${this.formatDate(video.publishedAt)}</div>
+          </div>
+        `;
+        
+        element.addEventListener('click', () => this.openModal(video.id, false));
+        element.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.openModal(video.id, false);
+            }
+        });
+        
+        return element;
+    }
+
+    createShortElement(video) {
+        const element = document.createElement('div');
+        element.className = 'short-item';
+        element.setAttribute('data-video-id', video.id);
+        
+        element.innerHTML = `
+            <div class="short-thumbnail-container">
+                <img src="${video.thumbnailUrl}" 
+                     alt="${video.title}" 
+                     class="short-thumbnail" 
+                     loading="lazy" />
+                <div class="short-play-button" aria-label="Play short"></div>
+            <div class="shorts-badge">Shorts</div>
+                <div class="video-duration">${this.formatDuration(video.durationSeconds)}</div>
+            <div class="short-info">
+                    <div class="short-title">${video.title.replace(/#shorts/ig, '')}</div>
+                    <div class="short-date">${this.formatDate(video.publishedAt)}</div>
+                </div>
+          </div>
+        `;
+        
+        element.addEventListener('click', () => this.openModal(video.id, true));
+        element.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.openModal(video.id, true);
+            }
+        });
+        
+        return element;
+    }
+
+         updateTabCounts(longs, shorts) {
+         document.getElementById('longsCount').textContent = longs.length;
+         document.getElementById('shortsCount').textContent = shorts.length;
+     }
+
+     switchTab(tabName) {
+         const tabs = document.querySelectorAll('.tab-button');
+         const panels = document.querySelectorAll('.tab-panel');
+         const indicator = document.querySelector('.tab-indicator');
+         
+         // Remove active class from all tabs and panels
+         tabs.forEach(tab => tab.classList.remove('active'));
+         panels.forEach(panel => {
+             panel.classList.remove('active');
+             panel.classList.add('fade-out');
+         });
+         
+         // Add active class to selected tab
+         const activeTab = document.querySelector(`[data-tab="${tabName}"]`);
+         const activePanel = document.getElementById(`${tabName}Panel`);
+         
+         if (activeTab && activePanel) {
+             activeTab.classList.add('active');
+             
+             // Update indicator position
+             if (tabName === 'shorts') {
+                 indicator.classList.add('shorts');
+             } else {
+                 indicator.classList.remove('shorts');
+             }
+             
+             // Show panel with animation
+             setTimeout(() => {
+                 activePanel.classList.remove('fade-out');
+                 activePanel.classList.add('active');
+             }, 150);
+         }
+     }
+
+    showLoading() {
+        this.loadingState.classList.remove('hidden');
+        this.errorState.classList.add('hidden');
+        this.videosContent.classList.add('hidden');
+    }
+
+    hideLoading() {
+        this.loadingState.classList.add('hidden');
+    }
+
+    showError() {
+        this.errorState.classList.remove('hidden');
+    }
+
+    showContent() {
+        this.videosContent.classList.remove('hidden');
+    }
+}
+
+ // Initialize when DOM is loaded
+ document.addEventListener('DOMContentLoaded', () => {
+     const videosManager = new VideosManager();
+     
+     // Tab event listeners
+     document.querySelectorAll('.tab-button').forEach(button => {
+         button.addEventListener('click', () => {
+             const tabName = button.getAttribute('data-tab');
+             videosManager.switchTab(tabName);
+         });
+     });
+     
+     // Modal event listeners
+     document.getElementById('modalClose').addEventListener('click', () => {
+         videosManager.closeModal();
+     });
+     
+     document.getElementById('videoModal').addEventListener('click', (e) => {
+         if (e.target.id === 'videoModal') {
+             videosManager.closeModal();
+         }
+     });
+     
+     // Keyboard navigation for modal
+     document.addEventListener('keydown', (e) => {
+         if (e.key === 'Escape' && videosManager.modal.classList.contains('open')) {
+             videosManager.closeModal();
+         }
+     });
+ });
+  </script>
+
+</body>
+</html>

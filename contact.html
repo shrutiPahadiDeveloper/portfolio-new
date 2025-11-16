@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="logos/favicon.ico" type="image/x-icon">
+    <title>Contact - Shruti Sharma Portfolio</title>
+    <link rel="stylesheet" href="font.css">
+    <link rel="stylesheet" href="style.css">
+    <meta property="og:title" content="Contact - Shruti Sharma Portfolio">
+    <meta property="og:image" content="shruti.jpg">
+    <meta property="og:description" content="Content Creator | Himachali Soul | Nature Lover">
+    <meta property="og:url" content="https://shrutipahadi.com/contact">
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+
+<body>
+    
+    <!-- page loader start -->
+    <div class="page-loader">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <!-- page loader end -->
+
+    <!-- overlay start -->
+    <div class="overlay">
+        
+    </div>
+    <!-- overlay end -->
+
+<!--main start-->
+<div class="main">
+
+    <!-- header start -->
+    <header class="header">
+        <div class="container">
+            <div class="row flex-end">
+                <button  type="button" class="nav-toggler">
+                    <span></span>
+                </button>
+                <nav class="nav">
+                    <div class="nav-inner">
+                        <ul>
+                            <li><a href="index.html" class="nav-item">Home</a></li>
+                            <li><a href="about.html" class="nav-item">About</a></li>
+                            <li><a href="portfolio.html" class="nav-item">Portfolio</a></li>
+                            <li><a href="contact.html" class="nav-item active">Contact</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <!-- header end -->
+
+    <!-- Contact Section Start -->
+    <section class="contact-section sec-padding active" id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="section-title">
+                    <h2>Contact me</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="contact-form">
+                    <form class="contact-form-message" id="contactForm" onsubmit="return false;">
+                    <div class="row">
+                        <input type="text" name="honeypot" style="display:none;">
+                        <div class="input-group">
+                            <input type="text" placeholder="Name" class="input-control" name="name" required>
+                        </div>
+                        <div class="input-group">
+                            <input type="email" placeholder="Email" class="input-control" name="email" required>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" placeholder="Subject" class="input-control" name="subject" required>
+                        </div>
+                        <div class="input-group">
+                            <textarea placeholder="Message" class="input-control" name="message" required></textarea>
+                        </div>
+                        <div class="submit-btn">
+                            <button
+                                type="submit"
+                                class="btn g-recaptcha"
+                                data-sitekey="6Ldj71grAAAAABfDu3EUld_yCO86yP_Wdh7OUO3G"
+                                data-callback="onSubmit"
+                                data-badge="inline"
+                                data-size="invisible"
+                            >Send Message</button>
+                        </div>
+                    </div>
+                </form>
+
+                </div>
+                <div class="contact-info">
+                    <div class="contact-info-item">
+                        <h3>Email</h3>
+                        <p>ask@shrutipahari.com</p>
+                    </div>
+                    <div class="contact-info-item">
+                        <h3>Phone</h3>
+                        <p>+91 98 **** ****</p>
+                    </div>
+                    <div class="contact-info-item">
+                        <h3>Social Handles</h3>
+                        <div class="social-links">
+                            <a href="https://www.facebook.com/shruti.pahadi/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://www.youtube.com/@pahadi...007" target="_blank"><i class="fab fa-youtube"></i></a>
+                            <a href="https://www.instagram.com/shrutipahari_007/" target="_blank"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Contact Section End -->
+
+</div>
+<!--main end-->
+
+<script src="script.js"></script>
+
+<script>
+    // Add form submission handler
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        // The form will be submitted by the reCAPTCHA callback
+    });
+
+    // Add this after your DOM is ready
+    document.querySelector('#contactForm button[type="submit"]').addEventListener('click', function(e) {
+        // Set loading state
+        this.disabled = true;
+        this.textContent = 'Sending...';
+    });
+
+    function onSubmit(token) {
+        const form = document.getElementById('contactForm');
+        const formData = new FormData(form);
+        formData.append('g-recaptcha-response', token);
+
+        // Disable the submit button while processing
+        const submitBtn = form.querySelector('button[type="submit"]');
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+        }
+
+        fetch('contact.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+            document.querySelector('.contact-form').insertAdjacentHTML('afterbegin', data);
+            
+            // Clear the form if submission was successful
+            if (data.includes('Thank you for contacting us')) {
+                form.reset();
+                // Reset reCAPTCHA
+                grecaptcha.reset();
+            }
+            
+            // Remove the response message after 5 seconds
+            setTimeout(() => {
+                const message = document.querySelector('.contact-form div[style*="background-color"]');
+                if (message) {
+                    message.remove();
+                }
+            }, 5000);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            const errorDiv = document.createElement('div');
+            errorDiv.style.backgroundColor = '#f8d7da';
+            errorDiv.style.color = '#721c24';
+            errorDiv.style.padding = '10px';
+            errorDiv.style.margin = '20px 0';
+            errorDiv.innerHTML = '<h2>Oops! Something went wrong.</h2><p>Sorry, we were unable to send your message. Please try again later.</p>';
+            
+            const form = document.querySelector('.contact-form');
+            if (form) {
+                form.insertBefore(errorDiv, form.firstChild);
+                
+                setTimeout(() => {
+                    errorDiv.remove();
+                }, 5000);
+            }
+        })
+        .finally(() => {
+            // Re-enable the submit button
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Send Message';
+            }
+        });
+    }
+</script>
+
+</body>
+
+</html> 

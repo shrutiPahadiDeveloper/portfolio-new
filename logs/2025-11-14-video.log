@@ -1,0 +1,13 @@
+[2025-11-14 17:50:34] [INFO] [video] videos.php request start {"method":"GET","ip":"::1","ua":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"}
+[2025-11-14 17:50:34] [INFO] [video] Computed fetch limit {"isInitial":false,"lastUpdatedEpoch":1754929465,"ageDays":95,"fetchLimit":200,"perDayMultiplier":3}
+[2025-11-14 17:50:34] [INFO] [video] Fetching latest video IDs {"limit":200}
+[2025-11-14 17:50:46] [INFO] [video] Collected latest video IDs {"count":112,"rawSearchItems":425}
+[2025-11-14 17:50:46] [INFO] [video] Fetching details for video IDs {"count":112}
+[2025-11-14 17:50:49] [INFO] [video] Fetched details and normalized records {"newRecords":112}
+[2025-11-14 17:50:49] [INFO] [video] Cache updated {"totalVideos":561}
+[2025-11-14 17:50:49] [INFO] [video] Serving cache {"totalVideos":561}
+[2025-11-14 17:51:08] [INFO] [video] videos.php request start {"method":"GET","ip":"::1","ua":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"}
+[2025-11-14 17:51:08] [INFO] [video] Performing quick check for new videos within 24h {"ageSeconds":19,"ageHours":0}
+[2025-11-14 17:51:09] [INFO] [video] No new videos found within 24h {"newestVideoId":"la_cRNXzUgs","isKnown":true,"ageHours":0}
+[2025-11-14 17:51:09] [INFO] [video] Computed fetch limit {"isInitial":false,"lastUpdatedEpoch":1763139049,"ageDays":0,"fetchLimit":0,"perDayMultiplier":3}
+[2025-11-14 17:51:09] [INFO] [video] Serving cache {"totalVideos":561}
