@@ -83,15 +83,11 @@
                         <div class="input-group">
                             <textarea placeholder="Message" class="input-control" name="message" required></textarea>
                         </div>
+                        <div class="input-group">
+                            <div class="g-recaptcha" data-sitekey="6Ldj71grAAAAABfDu3EUld_yCO86yP_Wdh7OUO3G"></div>
+                        </div>
                         <div class="submit-btn">
-                            <button
-                                type="submit"
-                                class="btn g-recaptcha"
-                                data-sitekey="6Ldj71grAAAAABfDu3EUld_yCO86yP_Wdh7OUO3G"
-                                data-callback="onSubmit"
-                                data-badge="inline"
-                                data-size="invisible"
-                            >Send Message</button>
+                            <button type="submit" class="btn">Send Message</button>
                         </div>
                     </div>
                 </form>
@@ -126,80 +122,50 @@
 <script src="script.js"></script>
 
 <script>
-    // Add form submission handler
-    document.getElementById('contactForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        // The form will be submitted by the reCAPTCHA callback
-    });
-
-    // Add this after your DOM is ready
+    document.getElementById('contactForm').addEventListener('submit', function(e) { e.preventDefault(); });
     document.querySelector('#contactForm button[type="submit"]').addEventListener('click', function(e) {
-        // Set loading state
-        this.disabled = true;
-        this.textContent = 'Sending...';
-    });
-
-    function onSubmit(token) {
         const form = document.getElementById('contactForm');
-        const formData = new FormData(form);
-        formData.append('g-recaptcha-response', token);
-
-        // Disable the submit button while processing
-        const submitBtn = form.querySelector('button[type="submit"]');
-        if (submitBtn) {
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Sending...';
+        const submitBtn = this;
+        const token = window.grecaptcha ? grecaptcha.getResponse() : '';
+        if (!token) {
+            const warn = document.createElement('div');
+            warn.style.backgroundColor = '#f8d7da';
+            warn.style.color = '#721c24';
+            warn.style.padding = '10px';
+            warn.style.margin = '20px 0';
+            warn.innerHTML = '<h2>reCAPTCHA Verification Failed</h2><p>Please complete the reCAPTCHA verification.</p>';
+            const formEl = document.querySelector('.contact-form');
+            if (formEl) { formEl.insertBefore(warn, formEl.firstChild); setTimeout(() => { warn.remove(); }, 5000); }
+            return;
         }
-
-        fetch('contactusapi.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.text())
-        .then(data => {
-            document.querySelector('.contact-form').insertAdjacentHTML('afterbegin', data);
-            
-            // Clear the form if submission was successful
-            if (data.includes('Thank you for contacting us')) {
-                form.reset();
-                // Reset reCAPTCHA
-                grecaptcha.reset();
-            }
-            
-            // Remove the response message after 5 seconds
-            setTimeout(() => {
-                const message = document.querySelector('.contact-form div[style*="background-color"]');
-                if (message) {
-                    message.remove();
+        submitBtn.disabled = true; submitBtn.textContent = 'Sending...';
+        const formData = new FormData(form);
+        if (!formData.has('g-recaptcha-response')) { formData.append('g-recaptcha-response', token); }
+        fetch('contactusapi.php', { method: 'POST', body: formData })
+            .then(response => response.text())
+            .then(data => {
+                document.querySelector('.contact-form').insertAdjacentHTML('afterbegin', data);
+                if (data.includes('Thank you for contacting us')) {
+                    form.reset();
+                    if (window.grecaptcha) { grecaptcha.reset(); }
                 }
-            }, 5000);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            const errorDiv = document.createElement('div');
-            errorDiv.style.backgroundColor = '#f8d7da';
-            errorDiv.style.color = '#721c24';
-            errorDiv.style.padding = '10px';
-            errorDiv.style.margin = '20px 0';
-            errorDiv.innerHTML = '<h2>Oops! Something went wrong.</h2><p>Sorry, we were unable to send your message. Please try again later.</p>';
-            
-            const form = document.querySelector('.contact-form');
-            if (form) {
-                form.insertBefore(errorDiv, form.firstChild);
-                
                 setTimeout(() => {
-                    errorDiv.remove();
+                    const message = document.querySelector('.contact-form div[style*="background-color"]');
+                    if (message) { message.remove(); }
                 }, 5000);
-            }
-        })
-        .finally(() => {
-            // Re-enable the submit button
-            if (submitBtn) {
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Send Message';
-            }
-        });
-    }
+            })
+            .catch(error => {
+                const errorDiv = document.createElement('div');
+                errorDiv.style.backgroundColor = '#f8d7da';
+                errorDiv.style.color = '#721c24';
+                errorDiv.style.padding = '10px';
+                errorDiv.style.margin = '20px 0';
+                errorDiv.innerHTML = '<h2>Oops! Something went wrong.</h2><p>Sorry, we were unable to send your message. Please try again later.</p>';
+                const formEl = document.querySelector('.contact-form');
+                if (formEl) { formEl.insertBefore(errorDiv, formEl.firstChild); setTimeout(() => { errorDiv.remove(); }, 5000); }
+            })
+            .finally(() => { submitBtn.disabled = false; submitBtn.textContent = 'Send Message'; });
+    });
 </script>
 
 </body>

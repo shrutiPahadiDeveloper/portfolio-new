@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/logger.php';
+require_once __DIR__ . '/config.php';
 logger_log('contact', 'INFO', 'Contact view', [
   'ip' => $_SERVER['REMOTE_ADDR'] ?? null,
   'ua' => $_SERVER['HTTP_USER_AGENT'] ?? null
@@ -32,7 +33,7 @@ if ($layout === 'legacy') {
     <meta property="og:image" content="<?php echo htmlspecialchars($ogImage); ?>">
     <meta property="og:description" content="Content Creator | Himachali Soul | Nature Lover">
     <meta property="og:url" content="https://shrutipahadi.com/contact">
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <?php if(defined('RECAPTCHA_ENABLED') && RECAPTCHA_ENABLED): ?><script src="https://www.google.com/recaptcha/api.js" async defer></script><?php endif; ?>
   </head>
   <body>
     <div class="page-loader"><div></div><div></div><div></div></div>
@@ -77,8 +78,13 @@ if ($layout === 'legacy') {
                   <div class="input-group">
                     <textarea placeholder="Message" class="input-control" name="message" required></textarea>
                   </div>
+                  <?php if(defined('RECAPTCHA_ENABLED') && RECAPTCHA_ENABLED): ?>
+                  <div class="input-group">
+                    <div class="g-recaptcha" data-sitekey="<?php echo RECAPTCHA_SITE_KEY; ?>"></div>
+                  </div>
+                  <?php endif; ?>
                   <div class="submit-btn">
-                    <button type="submit" class="btn g-recaptcha" data-sitekey="6Ldj71grAAAAABfDu3EUld_yCO86yP_Wdh7OUO3G" data-callback="onSubmit" data-badge="inline" data-size="invisible">Send Message</button>
+                    <button type="submit" class="btn">Send Message</button>
                   </div>
                 </div>
               </form>
@@ -102,9 +108,38 @@ if ($layout === 'legacy') {
     <script src="script.js"></script>
     <script>
       document.getElementById('contactForm').addEventListener('submit',function(e){e.preventDefault();});
-      document.querySelector('#contactForm button[type="submit"]').addEventListener('click',function(e){this.disabled=true;this.textContent='Sending...';});
-      function onSubmit(token){const form=document.getElementById('contactForm');const formData=new FormData(form);formData.append('g-recaptcha-response',token);const submitBtn=form.querySelector('button[type="submit"]');if(submitBtn){submitBtn.disabled=true;submitBtn.textContent='Sending...';}
-        fetch('contactusapi.php',{method:'POST',body:formData}).then(response=>response.text()).then(data=>{document.querySelector('.contact-form').insertAdjacentHTML('afterbegin',data);if(data.includes('Thank you for contacting us')){form.reset();grecaptcha.reset();}setTimeout(()=>{const message=document.querySelector('.contact-form div[style*="background-color"]');if(message){message.remove();}},5000);}).catch(error=>{const errorDiv=document.createElement('div');errorDiv.style.backgroundColor='#f8d7da';errorDiv.style.color='#721c24';errorDiv.style.padding='10px';errorDiv.style.margin='20px 0';errorDiv.innerHTML='<h2>Oops! Something went wrong.</h2><p>Sorry, we were unable to send your message. Please try again later.</p>';const formEl=document.querySelector('.contact-form');if(formEl){formEl.insertBefore(errorDiv,formEl.firstChild);setTimeout(()=>{errorDiv.remove();},5000);}}).finally(()=>{if(submitBtn){submitBtn.disabled=false;submitBtn.textContent='Send Message';}});}
+      const recaptchaEnabled = <?php echo (defined('RECAPTCHA_ENABLED') && RECAPTCHA_ENABLED) ? 'true' : 'false'; ?>;
+      document.querySelector('#contactForm button[type="submit"]').addEventListener('click',function(e){
+        const form=document.getElementById('contactForm');
+        const submitBtn=this;
+        const token=(recaptchaEnabled && window.grecaptcha)?grecaptcha.getResponse():''; 
+        if(recaptchaEnabled && !token){
+          const warn=document.createElement('div');warn.style.backgroundColor='#f8d7da';warn.style.color='#721c24';warn.style.padding='10px';warn.style.margin='20px 0';warn.innerHTML='<h2>reCAPTCHA Verification Failed</h2><p>Please complete the reCAPTCHA verification.</p>';
+          const formEl=document.querySelector('.contact-form');if(formEl){formEl.insertBefore(warn,formEl.firstChild);setTimeout(()=>{warn.remove();},5000);}
+          return;
+        }
+        submitBtn.disabled=true;submitBtn.textContent='Sending...';
+        const formData=new FormData(form);
+        if(token && !formData.has('g-recaptcha-response')){formData.append('g-recaptcha-response',token);}
+        fetch('contactusapi.php',{method:'POST',body:formData})
+          .then(response=>response.text())
+          .then(data=>{
+            document.querySelector('.contact-form').insertAdjacentHTML('afterbegin',data);
+            if(data.includes('Thank you for contacting us')){
+              form.reset();
+              if(recaptchaEnabled && window.grecaptcha){grecaptcha.reset();}
+            }
+            setTimeout(()=>{
+              const message=document.querySelector('.contact-form div[style*="background-color"]');
+              if(message){message.remove();}
+            },5000);
+          })
+          .catch(error=>{
+            const errorDiv=document.createElement('div');errorDiv.style.backgroundColor='#f8d7da';errorDiv.style.color='#721c24';errorDiv.style.padding='10px';errorDiv.style.margin='20px 0';errorDiv.innerHTML='<h2>Oops! Something went wrong.</h2><p>Sorry, we were unable to send your message. Please try again later.</p>';
+            const formEl=document.querySelector('.contact-form');if(formEl){formEl.insertBefore(errorDiv,formEl.firstChild);setTimeout(()=>{errorDiv.remove();},5000);}
+          })
+          .finally(()=>{submitBtn.disabled=false;submitBtn.textContent='Send Message';});
+      });
     </script>
   </body>
   </html>
@@ -128,7 +163,7 @@ if ($layout === 'legacy') {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <?php if(defined('RECAPTCHA_ENABLED') && RECAPTCHA_ENABLED): ?><script src="https://www.google.com/recaptcha/api.js" async defer></script><?php endif; ?>
     <style>
       :root{--bg:#0b0c10;--bg-soft:#0e1016;--panel:#10131a;--text:#e8ecf1;--muted:#a6b0c0;--primary:#7c3aed;--primary-strong:#6d28d9;--accent:#22d3ee;--ring:rgba(124,58,237,.45);--shadow:0 14px 38px rgba(0,0,0,.35);--radius:16px;--radius-lg:24px;--container:1100px}
       html.light{--bg:#f7f8fb;--bg-soft:#ffffff;--panel:#ffffff;--text:#0f172a;--muted:#53607a;--primary:#6d28d9;--primary-strong:#5b21b6;--accent:#0891b2;--ring:rgba(93,63,211,.35);--shadow:0 14px 26px rgba(2,6,23,.08)}
@@ -206,7 +241,8 @@ if ($layout === 'legacy') {
               <div class="input-group"><input type="email" placeholder="Email" class="input-control" name="email" required></div>
               <div class="input-group"><input type="text" placeholder="Subject" class="input-control" name="subject" required></div>
               <div class="input-group"><textarea placeholder="Message" class="input-control" name="message" required></textarea></div>
-              <div class="submit-row"><button type="submit" class="btn g-recaptcha" data-sitekey="6Ldj71grAAAAABfDu3EUld_yCO86yP_Wdh7OUO3G" data-callback="onSubmit" data-badge="inline" data-size="invisible">Send Message</button></div>
+              <?php if(defined('RECAPTCHA_ENABLED') && RECAPTCHA_ENABLED): ?><div class="input-group"><div class="g-recaptcha" data-sitekey="<?php echo RECAPTCHA_SITE_KEY; ?>"></div></div><?php endif; ?>
+              <div class="submit-row"><button type="submit" class="btn">Send Message</button></div>
             </form>
           </div>
           <div class="panel reveal" style="transition-delay:.12s">
@@ -232,9 +268,39 @@ if ($layout === 'legacy') {
       const observer=new IntersectionObserver((entries)=>{entries.forEach((entry)=>{if(entry.isIntersecting){entry.target.classList.add('show');observer.unobserve(entry.target)}})},{threshold:.12});document.querySelectorAll('.reveal').forEach((el)=>observer.observe(el));
       (function(){const stored=localStorage.getItem('theme');const prefersLight=window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches;const html=document.documentElement;const current=stored||(prefersLight?'light':'dark');html.classList.toggle('light',current==='light');const showSun=current==='light';const sun=document.getElementById('sun');const moon=document.getElementById('moon');if(sun&&moon){sun.style.display=showSun?'block':'none';moon.style.display=showSun?'none':'block'}})();
       document.getElementById('themeToggle')&&document.getElementById('themeToggle').addEventListener('click',()=>{const html=document.documentElement;const isLight=html.classList.toggle('light');const theme=isLight?'light':'dark';localStorage.setItem('theme',theme);const sun=document.getElementById('sun');const moon=document.getElementById('moon');if(sun&&moon){sun.style.display=isLight?'block':'none';moon.style.display=isLight?'none':'block'}});
-      document.getElementById('contactForm').addEventListener('submit',function(e){e.preventDefault()});document.querySelector('#contactForm button[type="submit"]').addEventListener('click',function(e){this.disabled=true;this.textContent='Sending...'});
-      function onSubmit(token){const form=document.getElementById('contactForm');const formData=new FormData(form);formData.append('g-recaptcha-response',token);const submitBtn=form.querySelector('button[type="submit"]');if(submitBtn){submitBtn.disabled=true;submitBtn.textContent='Sending...'}
-        fetch('contactusapi.php',{method:'POST',body:formData}).then(response=>response.text()).then(data=>{document.querySelector('.contact.container').insertAdjacentHTML('afterbegin',data);if(data.includes('Thank you for contacting us')){form.reset();grecaptcha.reset()}setTimeout(()=>{const message=document.querySelector('.contact.container div[style*="background-color"]');if(message){message.remove()}},5000)}).catch(error=>{const errorDiv=document.createElement('div');errorDiv.style.backgroundColor='#f8d7da';errorDiv.style.color='#721c24';errorDiv.style.padding='10px';errorDiv.style.margin='20px 0';errorDiv.innerHTML='<h2>Oops! Something went wrong.</h2><p>Sorry, we were unable to send your message. Please try again later.</p>';const container=document.querySelector('.contact.container');if(container){container.insertBefore(errorDiv,container.firstChild);setTimeout(()=>{errorDiv.remove()},5000)}}).finally(()=>{if(submitBtn){submitBtn.disabled=false;submitBtn.textContent='Send Message'}})}
+      document.getElementById('contactForm').addEventListener('submit',function(e){e.preventDefault()});
+      const recaptchaEnabled=<?php echo (defined('RECAPTCHA_ENABLED') && RECAPTCHA_ENABLED) ? 'true' : 'false'; ?>;
+      document.querySelector('#contactForm button[type="submit"]').addEventListener('click',function(e){
+        const form=document.getElementById('contactForm');
+        const submitBtn=this;
+        const token=(recaptchaEnabled && window.grecaptcha)?grecaptcha.getResponse():''; 
+        if(recaptchaEnabled && !token){
+          const warn=document.createElement('div');warn.style.backgroundColor='#f8d7da';warn.style.color='#721c24';warn.style.padding='10px';warn.style.margin='20px 0';warn.innerHTML='<h2>reCAPTCHA Verification Failed</h2><p>Please complete the reCAPTCHA verification.</p>';
+          const container=document.querySelector('.contact.container');if(container){container.insertBefore(warn,container.firstChild);setTimeout(()=>{warn.remove()},5000);}
+          return;
+        }
+        submitBtn.disabled=true;submitBtn.textContent='Sending...';
+        const formData=new FormData(form);
+        if(token && !formData.has('g-recaptcha-response')){formData.append('g-recaptcha-response',token);}
+        fetch('contactusapi.php',{method:'POST',body:formData})
+          .then(response=>response.text())
+          .then(data=>{
+            document.querySelector('.contact.container').insertAdjacentHTML('afterbegin',data);
+            if(data.includes('Thank you for contacting us')){
+              form.reset();
+              if(recaptchaEnabled && window.grecaptcha){grecaptcha.reset();}
+            }
+            setTimeout(()=>{
+              const message=document.querySelector('.contact.container div[style*="background-color"]');
+              if(message){message.remove()}
+            },5000)
+          })
+          .catch(error=>{
+            const errorDiv=document.createElement('div');errorDiv.style.backgroundColor='#f8d7da';errorDiv.style.color='#721c24';errorDiv.style.padding='10px';errorDiv.style.margin='20px 0';errorDiv.innerHTML='<h2>Oops! Something went wrong.</h2><p>Sorry, we were unable to send your message. Please try again later.</p>';
+            const container=document.querySelector('.contact.container');if(container){container.insertBefore(errorDiv,container.firstChild);setTimeout(()=>{errorDiv.remove()},5000)}
+          })
+          .finally(()=>{submitBtn.disabled=false;submitBtn.textContent='Send Message'})
+      });
     </script>
   </body>
 </html>
