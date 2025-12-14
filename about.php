@@ -4,7 +4,8 @@ logger_log('about', 'INFO', 'About view', [
   'ip' => $_SERVER['REMOTE_ADDR'] ?? null,
   'ua' => $_SERVER['HTTP_USER_AGENT'] ?? null
 ]);
-$layout = isset($_GET['layout']) ? strtolower($_GET['layout']) : 'modern';
+$raw = isset($_GET['layout']) ? strtolower($_GET['layout']) : '';
+$layout = in_array($raw, ['secondery','secondary','modern'], true) ? 'modern' : 'legacy';
 $siteName = 'Shruti Sharma';
 $personName = 'Shruti Sharma';
 $heroTagline = 'Pahadi Girl from Himachal Pradesh — traveler, photographer and content creator rooted in nature and culture.';
@@ -19,9 +20,11 @@ $education = [
   ['date' => '2016 - 2018', 'title' => 'Senior Secondary (12th)', 'institution' => 'Govt. Girls School, Himachal', 'text' => 'Completed my schooling with a focus on arts and languages. This period inspired me to embrace and preserve our pahadi culture through creative mediums.']
 ];
 $experience = [
-  ['date' => '2021 - Present', 'title' => 'Independent Content Creator & Travel Vlogger', 'text' => 'Creating digital content centered around pahadi culture, travel, spirituality, and lifestyle. Built a strong social media presence with relatable and inspiring content across YouTube, Instagram & LinkedIn.'],
+  ['date' => '2025', 'title' => 'Invited Cultural Contributor – Rashtrapati Nilayam, Hyderabad', 'text' => 'Invited to Rashtrapati Nilayam, Hyderabad, one of the official Presidential Estates, as part of national-level cultural engagement and heritage celebrations. Associated with events reflecting India’s diverse traditions, public cultural participation, and artistic expression under the President of India’s cultural initiatives, including large-scale festivals such as Bharatiya Kala Mahotsav.'],
+  ['date' => '2024', 'title' => 'Special Invitee & Award Recipient – Winter Fest, Rashtrapati Niwas, Shimla (Mashobra)', 'text' => 'Invited to the exclusive Winter Fest 2024 hosted at Rashtrapati Niwas, Mashobra, a heritage residence of the Hon’ble President of India. Recognized and awarded for cultural representation and contribution, celebrating Himachal Pradesh’s rich traditions, harmony, and heritage. Participated in a prestigious cultural gathering highlighting Himachali art, values, and spirit at a national level.'],
+  ['date' => '2023', 'title' => 'Social Media Collaborator - Various Brands', 'text' => 'Collaborated with local and spiritual brands to create meaningful content that aligns with values of simplicity, awareness, and authenticity.'],
   ['date' => '2022 - Present', 'title' => 'Speaker & Host - Cultural & Social Events', 'text' => 'Invited to speak and host local events across Himachal, promoting awareness, positivity, and connection to roots among youth and communities.'],
-  ['date' => '2023', 'title' => 'Social Media Collaborator - Various Brands', 'text' => 'Collaborated with local and spiritual brands to create meaningful content that aligns with values of simplicity, awareness, and authenticity.']
+  ['date' => '2021 - Present', 'title' => 'Independent Content Creator & Travel Vlogger', 'text' => 'Creating digital content centered around pahadi culture, travel, spirituality, and lifestyle. Built a strong social media presence with relatable and inspiring content across YouTube, Instagram & LinkedIn.']
 ];
 $portraitMain = 'shruti.jpeg';
 $portraitMobile = 'shruti.jpg';
@@ -57,6 +60,7 @@ if ($layout === 'legacy') {
                   <li><a href="index.php" class="nav-item">Home</a></li>
                   <li><a href="about.php" class="nav-item active">About</a></li>
                   <li><a href="portfolio.php" class="nav-item">Portfolio</a></li>
+                  <li><a href="videos.php" class="nav-item">Videos</a></li>
                   <li><a href="contact.php" class="nav-item">Contact</a></li>
                 </ul>
               </div>
@@ -81,17 +85,17 @@ if ($layout === 'legacy') {
                 <?php foreach ($skills as $s) { echo '<div class="skill-item">'.htmlspecialchars($s).'</div>'; } ?>
               </div>
               <div class="about-tabs">
-                <button type="button" class="tab-item active" data-target="#education">Education</button>
-                <button type="button" class="tab-item" data-target="#experience">Experience</button>
+              <button type="button" class="tab-item active" data-target="#experience">Experience</button>  
+              <!-- <button type="button" class="tab-item" data-target="#education">Education</button> -->
               </div>
-              <div class="tab-content active" id="education">
-                <div class="timeline">
-                  <?php foreach ($education as $e) { echo '<div class="timeline-item"><span class="date">'.htmlspecialchars($e['date']).'</span><h4>'.htmlspecialchars($e['title']).' - <span>'.htmlspecialchars($e['institution']).'</span></h4><p>'.htmlspecialchars($e['text']).'</p></div>'; } ?>
-                </div>
-              </div>
-              <div class="tab-content" id="experience">
+              <div class="tab-content active" id="experience">
                 <div class="timeline">
                   <?php foreach ($experience as $x) { echo '<div class="timeline-item"><span class="date">'.htmlspecialchars($x['date']).'</span><h4>'.htmlspecialchars($x['title']).'</h4><p>'.htmlspecialchars($x['text']).'</p></div>'; } ?>
+                </div>
+              </div>
+              <div class="tab-content" id="education">
+                <div class="timeline">
+                  <?php foreach ($education as $e) { echo '<div class="timeline-item"><span class="date">'.htmlspecialchars($e['date']).'</span><h4>'.htmlspecialchars($e['title']).' - <span>'.htmlspecialchars($e['institution']).'</span></h4><p>'.htmlspecialchars($e['text']).'</p></div>'; } ?>
                 </div>
               </div>
               <a href="contact.php" class="btn">Contact me</a>

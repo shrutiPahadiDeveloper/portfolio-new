@@ -4,7 +4,8 @@ logger_log('homepage', 'INFO', 'Homepage view', [
   'ip' => $_SERVER['REMOTE_ADDR'] ?? null,
   'ua' => $_SERVER['HTTP_USER_AGENT'] ?? null
 ]);
-$layout = isset($_GET['layout']) ? strtolower($_GET['layout']) : 'modern';
+$raw = isset($_GET['layout']) ? strtolower($_GET['layout']) : '';
+$layout = in_array($raw, ['secondery','secondary','modern'], true) ? 'modern' : 'legacy';
 $siteName = 'Shruti Sharma';
 $personName = 'Shruti Sharma';
 $heroTagline = 'Content Creator | Pahadi Girl | Nature & Culture Lover';
@@ -44,6 +45,7 @@ if ($layout === 'legacy') {
                   <li><a href="index.php" class="nav-item active">Home</a></li>
                   <li><a href="about.php" class="nav-item">About</a></li>
                   <li><a href="portfolio.php" class="nav-item">Portfolio</a></li>
+                  <li><a href="videos.php" class="nav-item">Videos</a></li>
                   <li><a href="contact.php" class="nav-item">Contact</a></li>
                 </ul>
               </div>
@@ -325,6 +327,7 @@ if ($layout === 'legacy') {
           <a href="index.php" class="active">Home</a>
           <a href="about.php">About</a>
           <a href="portfolio.php">Portfolio</a>
+          <a href="videos.php">Videos</a>
           <a href="contact.php">Contact</a>
         </nav>
         <div class="nav-cta">
@@ -342,6 +345,7 @@ if ($layout === 'legacy') {
         <a href="index.php" class="active">Home</a>
         <a href="about.php">About</a>
         <a href="portfolio.php">Portfolio</a>
+        <a href="videos.php">Videos</a>
         <a href="contact.php">Contact</a>
       </nav>
     </header>

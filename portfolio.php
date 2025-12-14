@@ -4,7 +4,8 @@ logger_log('portfolio', 'INFO', 'Portfolio view', [
   'ip' => $_SERVER['REMOTE_ADDR'] ?? null,
   'ua' => $_SERVER['HTTP_USER_AGENT'] ?? null
 ]);
-$layout = isset($_GET['layout']) ? strtolower($_GET['layout']) : 'modern';
+$raw = isset($_GET['layout']) ? strtolower($_GET['layout']) : '';
+$layout = in_array($raw, ['secondery','secondary','modern'], true) ? 'modern' : 'legacy';
 $qpid = $_GET['qpid'] ?? ($_GET['qvid'] ?? null);
 $siteName = 'Shruti Sharma';
 $ogImage = 'shruti.jpg';
@@ -110,6 +111,7 @@ if ($layout === 'legacy') {
                   <li><a href="index.php" class="nav-item">Home</a></li>
                   <li><a href="about.php" class="nav-item">About</a></li>
                   <li><a href="portfolio.php" class="nav-item active">Portfolio</a></li>
+                  <li><a href="videos.php" class="nav-item">Videos</a></li>
                   <li><a href="contact.php" class="nav-item">Contact</a></li>
                 </ul>
               </div>

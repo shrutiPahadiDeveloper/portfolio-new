@@ -5,11 +5,12 @@ logger_log('contact', 'INFO', 'Contact view', [
   'ip' => $_SERVER['REMOTE_ADDR'] ?? null,
   'ua' => $_SERVER['HTTP_USER_AGENT'] ?? null
 ]);
-$layout = isset($_GET['layout']) ? strtolower($_GET['layout']) : 'modern';
+$raw = isset($_GET['layout']) ? strtolower($_GET['layout']) : '';
+$layout = in_array($raw, ['secondery','secondary','modern'], true) ? 'modern' : 'legacy';
 $siteName = 'Shruti Sharma';
 $ogImage = 'shruti.jpg';
 $pageTitle = 'Contact - '.$siteName.' Portfolio';
-$sectionTitle = 'Contact me';
+$sectionTitle = 'Contact Us';
 $email = 'ask@shrutipahari.com';
 $phone = '+91 98 **** ****';
 $social = [
@@ -28,6 +29,7 @@ if ($layout === 'legacy') {
     <link rel="icon" href="logos/favicon.ico" type="image/x-icon">
     <title><?php echo htmlspecialchars($pageTitle); ?></title>
     <link rel="stylesheet" href="font.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <meta property="og:title" content="<?php echo htmlspecialchars($pageTitle); ?>">
     <meta property="og:image" content="<?php echo htmlspecialchars($ogImage); ?>">
@@ -49,6 +51,7 @@ if ($layout === 'legacy') {
                   <li><a href="index.php" class="nav-item">Home</a></li>
                   <li><a href="about.php" class="nav-item">About</a></li>
                   <li><a href="portfolio.php" class="nav-item">Portfolio</a></li>
+                  <li><a href="videos.php" class="nav-item">Videos</a></li>
                   <li><a href="contact.php" class="nav-item active">Contact</a></li>
                 </ul>
               </div>
@@ -163,6 +166,7 @@ if ($layout === 'legacy') {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
     <?php if(defined('RECAPTCHA_ENABLED') && RECAPTCHA_ENABLED): ?><script src="https://www.google.com/recaptcha/api.js" async defer></script><?php endif; ?>
     <style>
       :root{--bg:#0b0c10;--bg-soft:#0e1016;--panel:#10131a;--text:#e8ecf1;--muted:#a6b0c0;--primary:#7c3aed;--primary-strong:#6d28d9;--accent:#22d3ee;--ring:rgba(124,58,237,.45);--shadow:0 14px 38px rgba(0,0,0,.35);--radius:16px;--radius-lg:24px;--container:1100px}
@@ -225,10 +229,10 @@ if ($layout === 'legacy') {
     <header>
       <div class="container nav">
         <a href="index.php" class="brand"><span class="logo">S</span><span><?php echo htmlspecialchars($siteName); ?></span></a>
-        <nav class="nav-links"><a href="index.php">Home</a><a href="about.php">About</a><a href="portfolio.php">Portfolio</a><a href="contact.php" class="active">Contact</a></nav>
+        <nav class="nav-links"><a href="index.php">Home</a><a href="about.php">About</a><a href="portfolio.php">Portfolio</a><a href="videos.php">Videos</a><a href="contact.php" class="active">Contact</a></nav>
         <div class="nav-cta"><a class="btn secondary" href="portfolio.php">Watch Work</a><button class="theme-toggle" id="themeToggle"><svg id="sun" xmlns="http://www.w3.org/200/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path></svg><svg id="moon" style="display:none" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button><button class="nav-toggle" id="navToggle"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg></button></div>
       </div>
-      <nav class="mobile-menu" id="mobileMenu"><a href="index.php">Home</a><a href="about.php">About</a><a href="portfolio.php">Portfolio</a><a href="contact.php" class="active">Contact</a></nav>
+      <nav class="mobile-menu" id="mobileMenu"><a href="index.php">Home</a><a href="about.php">About</a><a href="portfolio.php">Portfolio</a><a href="videos.php">Videos</a><a href="contact.php" class="active">Contact</a></nav>
     </header>
     <main>
       <section class="contact container">

@@ -8,7 +8,8 @@ if (!$serve_json) {
         'ip' => $_SERVER['REMOTE_ADDR'] ?? null,
         'ua' => $_SERVER['HTTP_USER_AGENT'] ?? null
     ]);
-    $layout = isset($_GET['layout']) ? strtolower($_GET['layout']) : 'modern';
+    $raw = isset($_GET['layout']) ? strtolower($_GET['layout']) : '';
+    $layout = in_array($raw, ['secondery','secondary','modern'], true) ? 'modern' : 'legacy';
     $siteName = 'Shruti Sharma';
     $pageTitle = 'Videos';
     $pageIntro = 'Discover my latest content and YouTube Shorts';
