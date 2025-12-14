@@ -468,10 +468,10 @@ button{
     margin:auto;
     border-radius: 10px;
  }
- .about-img .img-box img{
+.about-img .img-box img{
     width: 100%;
     border-radius: 10px;
- }
+}
 
  .about-text h3{
     text-transform: capitalize;
@@ -818,4 +818,10 @@ Portfolio section
     .pp-header h3{
         font-size: 20px;
     }
+}
+/* Desktop-only sticky about image */
+@media(min-width: 992px){
+    .about-section .row{align-items:flex-start}
+    .about-img{position:sticky;top:120px}
+    .about-img .img-box{position:relative}
 }

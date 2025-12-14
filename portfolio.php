@@ -9,6 +9,31 @@ $layout = in_array($raw, ['secondery','secondary','modern'], true) ? 'modern' : 
 $qpid = $_GET['qpid'] ?? ($_GET['qvid'] ?? null);
 $siteName = 'Shruti Sharma';
 $ogImage = 'shruti.jpg';
+$videosAll = [];
+$featured = [];
+try {
+  $cacheFile = __DIR__ . '/videos.json';
+  if (file_exists($cacheFile)) {
+    $raw = file_get_contents($cacheFile);
+    $data = json_decode($raw, true);
+    if (is_array($data) && isset($data['videos']) && is_array($data['videos'])) {
+      $videosAll = $data['videos'];
+      $all = $videosAll;
+      $feat = array_values(array_filter($videosAll, function($v){
+        $t = strtolower(($v['title'] ?? '') . ' ' . ($v['description'] ?? ''));
+        $keywords = ['rashtrapati','nilayam','bhavan','shimla','hyderabad','collab','collaborator','brand','mahotsav','pro '];
+        foreach ($keywords as $k) { if (strpos($t, $k) !== false) return true; }
+        return false;
+      }));
+      usort($feat, function($a,$b){ return strcmp($b['publishedAt'] ?? '', $a['publishedAt'] ?? ''); });
+      $featured = array_slice($feat, 0, 6);
+      if (count($featured) === 0) {
+        usort($videosAll, function($a,$b){ return strcmp($b['publishedAt'] ?? '', $a['publishedAt'] ?? ''); });
+        $featured = array_slice($videosAll, 0, 6);
+      }
+    }
+  }
+} catch (Throwable $e) {}
 $items = [
   [
     'id' => 'vlogs',
@@ -77,6 +102,49 @@ $items = [
     'link_url' => 'https://www.instagram.com/shrutipahari_007'
   ],
 ];
+// Override static images with related thumbnails from videos.json
+if (!empty($videosAll)) {
+  $pickThumb = function(array $videos, array $keywords) {
+    $kw = array_map('strtolower', $keywords);
+    $candidates = [];
+    foreach ($videos as $v) {
+      $text = strtolower(($v['title'] ?? '') . ' ' . ($v['description'] ?? ''));
+      foreach ($kw as $k) {
+        if ($k !== '' && strpos($text, $k) !== false) { $candidates[] = $v; break; }
+      }
+    }
+    if (empty($candidates)) {
+      usort($videos, function($a,$b){ return strcmp($b['publishedAt'] ?? '', $a['publishedAt'] ?? ''); });
+      $best = $videos[0] ?? null;
+    } else {
+      usort($candidates, function($a,$b){ return strcmp($b['publishedAt'] ?? '', $a['publishedAt'] ?? ''); });
+      $best = $candidates[0] ?? null;
+    }
+    if ($best) {
+      return [
+        'thumb' => $best['thumbnailUrl'] ?? '',
+        'id' => $best['id'] ?? '',
+        'title' => $best['title'] ?? '',
+      ];
+    }
+    return null;
+  };
+  $map = [
+    'vlogs' => $pickThumb($videosAll, ['vlog','travel','journey','mountain','pahadi','nature']),
+    'reels' => $pickThumb($videosAll, ['shorts','reel','instagram','short']),
+    'photo' => $pickThumb($videosAll, ['photo','photography','picture','image','nature']),
+    'poetry' => $pickThumb($videosAll, ['poetry','poem','story','storytelling']),
+    'cooking' => $pickThumb($videosAll, ['cooking','recipe','food','kitchen']),
+    'spiritual' => $pickThumb($videosAll, ['temple','gita','spiritual','bhagavad','walk','reflection']),
+  ];
+  foreach ($items as &$it) {
+    $m = $map[$it['id']] ?? null;
+    if ($m && !empty($m['thumb'])) {
+      $it['image'] = $m['thumb'];
+    }
+  }
+  unset($it);
+}
 if ($qpid) {
   $items = array_values(array_filter($items, function($it) use ($qpid){return $it['id'] === $qpid;}));
 }
@@ -88,7 +156,8 @@ if ($layout === 'legacy') {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="logos/favicon.ico" type="image/x-icon">
+    <link rel="icon" type="image/svg+xml" href="logos/favicon.svg">
+    <link rel="alternate icon" href="logos/favicon.ico" type="image/x-icon">
     <title>Portfolio - <?php echo htmlspecialchars($siteName); ?> Portfolio</title>
     <link rel="stylesheet" href="font.css">
     <link rel="stylesheet" href="style.css">
@@ -121,7 +190,30 @@ if ($layout === 'legacy') {
       </header>
       <section class="portfolio-section sec-padding active" id="portfolio">
         <div class="container">
-          <div class="row"><div class="section-title"><h2>Recent Work</h2></div></div>
+          <!-- <div class="row"><div class="section-title"><h2>Recent Work</h2></div></div> -->
+          <?php if (!empty($featured)) { ?>
+          <div class="row">
+            <div class="section-title"><h2>Featured Videos & Collabs</h2></div>
+          </div>
+          <div class="row">
+            <?php foreach ($featured as $v) { ?>
+            <div class="portfolio-item">
+              <div class="portfolio-item-thumbnail"><a href="<?php echo 'https://www.youtube.com/watch?v='.htmlspecialchars($v['id']); ?>" target="_blank" rel="noopener"><img src="<?php echo htmlspecialchars($v['thumbnailUrl'] ?? ''); ?>" alt="<?php echo htmlspecialchars($v['title'] ?? ''); ?>"></a></div>
+              <h3 class="portfolio-item-title"><?php echo htmlspecialchars($v['title'] ?? ''); ?></h3>
+              <button type="button" class="btn view-project-btn" data-title="<?php echo htmlspecialchars($v['title'] ?? ''); ?>" data-description="<?php echo htmlspecialchars($v['description'] ?? ''); ?>">Details</button>
+              <div class="portfolio-item-details">
+                <div class="description"><p><?php echo htmlspecialchars($v['description'] ?? ''); ?></p></div>
+                <div class="general-info">
+                  <ul>
+                    <li>Published - <span><?php echo htmlspecialchars(date('M d, Y', strtotime($v['publishedAt'] ?? date('Y-m-d')))); ?></span></li>
+                    <li>Watch - <span><a href="<?php echo 'https://www.youtube.com/watch?v='.htmlspecialchars($v['id']); ?>" target="_blank">YouTube</a></span></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <?php } ?>
+          </div>
+          <?php } ?>
           <div class="row">
             <?php foreach ($items as $it) { ?>
             <div class="portfolio-item">
@@ -157,6 +249,7 @@ if ($layout === 'legacy') {
       </div>
     </div>
     <script src="script.js"></script>
+    <script src="banner.js" defer></script>
   </body>
   </html>
   <?php
@@ -169,7 +262,8 @@ if ($layout === 'legacy') {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link rel="icon" href="logos/favicon.ico" type="image/x-icon" />
+    <link rel="icon" type="image/svg+xml" href="logos/favicon.svg" />
+    <link rel="alternate icon" href="logos/favicon.ico" type="image/x-icon" />
     <title>Portfolio - Shruti Sharma Portfolio</title>
     <meta property="og:title" content="Portfolio - Shruti Sharma Portfolio" />
     <meta property="og:image" content="<?php echo htmlspecialchars($ogImage); ?>" />
@@ -243,6 +337,23 @@ if ($layout === 'legacy') {
     <main>
       <section class="container" id="portfolio">
         <h1>Recent Work</h1>
+        <?php if (!empty($featured)) { ?>
+        <div style="margin-top:10px">
+          <h2 style="font-family:'Playfair Display',serif;margin:0 0 8px">Featured Videos & Collabs</h2>
+          <div class="grid">
+            <?php foreach ($featured as $v) { ?>
+            <div class="card">
+              <img src="<?php echo htmlspecialchars($v['thumbnailUrl'] ?? ''); ?>" alt="<?php echo htmlspecialchars($v['title'] ?? ''); ?>">
+              <div class="info">
+                <div style="font-weight:700"><?php echo htmlspecialchars($v['title'] ?? ''); ?></div>
+                <div class="muted"><?php echo htmlspecialchars(date('M d, Y', strtotime($v['publishedAt'] ?? date('Y-m-d')))); ?></div>
+                <a class="btn" href="<?php echo 'https://www.youtube.com/watch?v='.htmlspecialchars($v['id']); ?>" target="_blank" style="margin-top:10px">Watch</a>
+              </div>
+            </div>
+            <?php } ?>
+          </div>
+        </div>
+        <?php } ?>
         <div class="grid">
           <?php foreach ($items as $it) { ?>
           <div class="card">
@@ -271,5 +382,6 @@ if ($layout === 'legacy') {
       const mobileMenu=document.getElementById('mobileMenu');
       navToggle&&navToggle.addEventListener('click',()=>{mobileMenu&&mobileMenu.classList.toggle('open')});
     </script>
+    <script src="banner.js" defer></script>
   </body>
 </html>

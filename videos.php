@@ -21,7 +21,8 @@ if (!$serve_json) {
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" href="logos/favicon.ico" type="image/x-icon">
+        <link rel="icon" type="image/svg+xml" href="logos/favicon.svg">
+        <link rel="alternate icon" href="logos/favicon.ico" type="image/x-icon">
         <title><?php echo htmlspecialchars($pageTitle); ?> - <?php echo htmlspecialchars($siteName); ?> Portfolio</title>
         <link rel="stylesheet" href="font.css">
         <link rel="stylesheet" href="style.css">
@@ -155,6 +156,7 @@ if (!$serve_json) {
           .hidden{display:none !important}
         </style>
         <script src="script.js"></script>
+        <script src="banner.js" defer></script>
         <script>
         class VideosManager {
           constructor(){this.loadingState=document.getElementById('loadingState');this.errorState=document.getElementById('errorState');this.videosContent=document.getElementById('videosContent');this.longsGallery=document.getElementById('longsGallery');this.shortsGallery=document.getElementById('shortsGallery');this.modal=document.getElementById('videoModal');this.modalIframe=document.getElementById('modalIframe');this.qvid=new URLSearchParams(window.location.search).get('qvid');this.init();}
@@ -179,6 +181,7 @@ if (!$serve_json) {
         }
         document.addEventListener('DOMContentLoaded',()=>{const videosManager=new VideosManager();document.querySelectorAll('.tab-button').forEach(button=>{button.addEventListener('click',()=>{const tabName=button.getAttribute('data-tab');videosManager.switchTab(tabName);});});document.getElementById('modalClose').addEventListener('click',()=>{videosManager.closeModal();});document.getElementById('videoModal').addEventListener('click',(e)=>{if(e.target.id==='videoModal'){videosManager.closeModal();}});document.addEventListener('keydown',(e)=>{if(e.key==='Escape'&&videosManager.modal.classList.contains('open')){videosManager.closeModal();}});});
         </script>
+      <script src="banner.js" defer></script>
       </body>
       </html>
       <?php
@@ -191,7 +194,8 @@ if (!$serve_json) {
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-      <link rel="icon" href="logos/favicon.ico" type="image/x-icon" />
+      <link rel="icon" type="image/svg+xml" href="logos/favicon.svg" />
+      <link rel="alternate icon" href="logos/favicon.ico" type="image/x-icon" />
       <title>Videos - Shruti Sharma Portfolio</title>
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

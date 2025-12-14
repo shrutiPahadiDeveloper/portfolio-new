@@ -26,7 +26,8 @@ if ($layout === 'legacy') {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="logos/favicon.ico" type="image/x-icon">
+    <link rel="icon" type="image/svg+xml" href="logos/favicon.svg">
+    <link rel="alternate icon" href="logos/favicon.ico" type="image/x-icon">
     <title><?php echo htmlspecialchars($pageTitle); ?></title>
     <link rel="stylesheet" href="font.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
@@ -109,6 +110,7 @@ if ($layout === 'legacy') {
       </section>
     </div>
     <script src="script.js"></script>
+    <script src="banner.js" defer></script>
     <script>
       document.getElementById('contactForm').addEventListener('submit',function(e){e.preventDefault();});
       const recaptchaEnabled = <?php echo (defined('RECAPTCHA_ENABLED') && RECAPTCHA_ENABLED) ? 'true' : 'false'; ?>;
@@ -156,7 +158,8 @@ if ($layout === 'legacy') {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link rel="icon" href="logos/favicon.ico" type="image/x-icon" />
+    <link rel="icon" type="image/svg+xml" href="logos/favicon.svg" />
+    <link rel="alternate icon" href="logos/favicon.ico" type="image/x-icon" />
     <title><?php echo htmlspecialchars($pageTitle); ?></title>
     <meta name="description" content="Reach out for collaborations, projects, and inquiries" />
     <meta property="og:title" content="<?php echo htmlspecialchars($pageTitle); ?>" />
@@ -306,5 +309,6 @@ if ($layout === 'legacy') {
           .finally(()=>{submitBtn.disabled=false;submitBtn.textContent='Send Message'})
       });
     </script>
+    <script src="banner.js" defer></script>
   </body>
 </html>

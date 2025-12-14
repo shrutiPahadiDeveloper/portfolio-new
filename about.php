@@ -37,7 +37,8 @@ if ($layout === 'legacy') {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="logos/favicon.ico" type="image/x-icon">
+    <link rel="icon" type="image/svg+xml" href="logos/favicon.svg">
+    <link rel="alternate icon" href="logos/favicon.ico" type="image/x-icon">
     <title>About - <?php echo htmlspecialchars($siteName); ?> Portfolio</title>
     <link rel="stylesheet" href="font.css">
     <link rel="stylesheet" href="style.css">
@@ -105,6 +106,7 @@ if ($layout === 'legacy') {
       </section>
     </div>
     <script src="script.js"></script>
+  <script src="banner.js" defer></script>
   </body>
   </html>
   <?php
@@ -117,7 +119,8 @@ if ($layout === 'legacy') {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link rel="icon" href="logos/favicon.ico" type="image/x-icon" />
+    <link rel="icon" type="image/svg+xml" href="logos/favicon.svg" />
+    <link rel="alternate icon" href="logos/favicon.ico" type="image/x-icon" />
     <title>About - Shruti Sharma Portfolio</title>
     <meta name="description" content="About Shruti Sharma — Pahadi Girl | Nature & Culture Lover" />
     <meta property="og:title" content="About - Shruti Sharma Portfolio" />
@@ -291,5 +294,6 @@ if ($layout === 'legacy') {
       (function(){const stored=localStorage.getItem('theme');const prefersLight=window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches;const html=document.documentElement;const current=stored||(prefersLight?'light':'dark');html.classList.toggle('light',current==='light');const sun=document.getElementById('sun');const moon=document.getElementById('moon');if(sun&&moon){const showSun=current==='light';sun.style.display=showSun?'block':'none';moon.style.display=showSun?'none':'block';}})();
       document.getElementById('themeToggle')&&document.getElementById('themeToggle').addEventListener('click',()=>{const html=document.documentElement;const isLight=html.classList.toggle('light');const theme=isLight?'light':'dark';localStorage.setItem('theme',theme);const sun=document.getElementById('sun');const moon=document.getElementById('moon');if(sun&&moon){const showSun=isLight;sun.style.display=showSun?'block':'none';moon.style.display=showSun?'none':'block';}});
     </script>
+    <script src="banner.js" defer></script>
   </body>
 </html>
