@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && empty($_POST["honeypot"])) {
         }
     }
 
-    $to = "ask@shrutipahari.com";
+    $to = "ask@shrutipahadi.com";
     $name = htmlspecialchars($_POST["name"]);
     $email = filter_var($_POST["email"], FILTER_SANITIZE_EMAIL);
     $subject = htmlspecialchars($_POST["subject"]);
